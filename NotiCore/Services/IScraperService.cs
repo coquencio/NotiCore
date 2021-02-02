@@ -7,6 +7,6 @@ namespace NotiCore.API.Services
 {
     public interface IScraperService
     {
-        Task<string> ExtractText(string url);
+        Task<string> ExtractWordsFromUrlAsync(string url);
     }
 }
