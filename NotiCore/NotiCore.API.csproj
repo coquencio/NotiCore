@@ -12,7 +12,10 @@
 
   <ItemGroup>
     <Folder Include="Infraestructure\Exceptions\" />
-    <Folder Include="Infraestructure\Responses\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NotiCoreML.Model\NotiCoreML.Model.csproj" />
   </ItemGroup>
 
 </Project>

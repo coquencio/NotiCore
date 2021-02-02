@@ -8,8 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NotiCore.API.Services;
-using NotiCore.Services;
-using NotiCore.Services.Implementation;
+using NotiCore.API.Services.Implementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +29,7 @@ namespace NotiCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<IScraperService, ScraperService>();
-
+            services.AddSingleton<IMLService, MLService>();
             services.AddControllers()
                 .AddNewtonsoftJson();
             services.AddSwaggerGen(c =>
