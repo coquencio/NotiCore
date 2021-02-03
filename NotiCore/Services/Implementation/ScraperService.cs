@@ -33,7 +33,7 @@ namespace NotiCore.API.Services.Implementation
             }
             throw new HttpRequestException("Invalid Url provided");
         }
-
+        #region private methods
         private string ExtractWordsFromHtml(string html)
         {
             string result;
@@ -115,5 +115,6 @@ namespace NotiCore.API.Services.Implementation
             }
             return result;
         }
+        #endregion
     }
 }

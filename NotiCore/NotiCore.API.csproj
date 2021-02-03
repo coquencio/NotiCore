@@ -5,17 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infraestructure\Exceptions\**" />
+    <Content Remove="Infraestructure\Exceptions\**" />
+    <EmbeddedResource Remove="Infraestructure\Exceptions\**" />
+    <None Remove="Infraestructure\Exceptions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.30" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.2" />
+    <PackageReference Include="Microsoft.ML" Version="1.5.0-preview2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Infraestructure\Exceptions\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\NotiCoreML.Model\NotiCoreML.Model.csproj" />
   </ItemGroup>
 
 </Project>

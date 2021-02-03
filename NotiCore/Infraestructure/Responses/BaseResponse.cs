@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NotiCore.API.Infraestructure.Responses;
+using NotiCore.API.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
