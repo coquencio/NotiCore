@@ -27,7 +27,7 @@ namespace NotiCoreML.Model
             MLContext mlContext = new MLContext();
 
             // Load model & create prediction engine
-            string modelPath = @"C:\Users\jorge.dominguez\AppData\Local\Temp\MLVSTools\NotiCoreML\NotiCoreML.Model\MLModel.zip";
+            string modelPath = @"";
             ITransformer mlModel = mlContext.Model.Load(modelPath, out var modelInputSchema);
             var predEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
 
