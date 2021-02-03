@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NotiCore.API.Infraestructure.Responses
+namespace NotiCore.API.Models.Responses
 {
     public class ResponseWrapper<T>
     {
