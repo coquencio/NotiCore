@@ -34,7 +34,7 @@ namespace NotiCore
             
             services.AddTransient<IMLNewsWebsiteModel>(x=> new MLNewsWebsiteModel(@"../NotiCoreML.Model/MLModel.zip"));
 
-            PythonService.SetupModules();
+            PythonService.SetupModules(@"Infraestructure/PythonLibs/newscatcher-0.2.0-py3-none-any.whl");
             services.AddSingleton<IPythonService, PythonService>();
             
             services.AddControllers()
