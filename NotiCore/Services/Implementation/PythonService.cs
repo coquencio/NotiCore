@@ -17,11 +17,12 @@ namespace NotiCore.API.Services.Implementation
             {
                 Installer.InstallWheel(wheelPath).GetAwaiter().GetResult();
             }
-            PythonEngine.Initialize();
         }
 
         public Dictionary<string, string> ExecutePythonCode(string[] libraries, string code, string[] values = null)
         {
+
+            PythonEngine.Initialize();
             using (Py.GIL())
             {
                 // create a Python scope
