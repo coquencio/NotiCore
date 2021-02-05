@@ -29,8 +29,14 @@ namespace NotiCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<IScraperService, ScraperService>();
+
             services.AddSingleton<IPredictNewsWebsiteService, PredictNewsWebsiteService>();
+            
             services.AddTransient<IMLNewsWebsiteModel>(x=> new MLNewsWebsiteModel(@"../NotiCoreML.Model/MLModel.zip"));
+
+            PythonService.SetupModules();
+            services.AddSingleton<IPythonService, PythonService>();
+            
             services.AddControllers()
                 .AddNewtonsoftJson();
             services.AddSwaggerGen(c =>
