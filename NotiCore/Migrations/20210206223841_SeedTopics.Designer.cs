@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NotiCore.API.Models.DataContext;
 
 namespace NotiCore.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210206223841_SeedTopics")]
+    partial class SeedTopics
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,22 +92,6 @@ namespace NotiCore.API.Migrations
                     b.HasKey("LanguageId");
 
                     b.ToTable("Languages");
-
-                    b.HasData(
-                        new
-                        {
-                            LanguageId = 1,
-                            Abbreviation = "EN",
-                            Description = "English",
-                            IsActive = true
-                        },
-                        new
-                        {
-                            LanguageId = 2,
-                            Abbreviation = "ES",
-                            Description = "Spanish",
-                            IsActive = true
-                        });
                 });
 
             modelBuilder.Entity("NotiCore.API.Models.DataContext.Source", b =>
@@ -127,14 +113,11 @@ namespace NotiCore.API.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SourceId");
 
                     b.HasIndex("LanguageId");
-
-                    b.HasIndex("Url")
-                        .IsUnique();
 
                     b.ToTable("Sources");
                 });
