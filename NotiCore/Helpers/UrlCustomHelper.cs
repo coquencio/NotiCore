@@ -14,5 +14,14 @@ namespace NotiCore.API.Helpers
                 && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
             
         }
+
+        public static string GetAbsoluteUri(string url)
+        {
+            Uri uriResult;
+            if (Uri.TryCreate(url, UriKind.Absolute, out uriResult))
+                return uriResult.AbsoluteUri;
+
+            return null;
+        }
     }
 }

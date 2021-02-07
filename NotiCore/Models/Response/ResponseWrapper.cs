@@ -11,6 +11,8 @@ namespace NotiCore.API.Models.Responses
         public string Message { get; }
         public T Data { get; }
 
+        public IEnumerable<string> Errors {get; set; }
+
         public ResponseWrapper(T data, string message = null, int? statusCode = null)
         {
             Data = data;

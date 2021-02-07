@@ -16,16 +16,34 @@ namespace NotiCore.API.Infraestructure.Response
             Response = new ResponseWrapper<T>(value, message, StatusCode);
             Value = Response;
         }
-        public BaseResponse<T> BadRequest()
+        public BaseResponse<T> BadRequest(IEnumerable<string> errors)
         {
             StatusCode = 400;
             Response.StatusCode = StatusCode;
-
+            Response.Errors = errors;
+            return this;
+        }
+        public BaseResponse<T> BadRequest(params string[] errors)
+        {
+            var errorList = new List<string>();
+            foreach (var error in errors)
+            {
+                errorList.Add(error);
+            }
+            StatusCode = 400;
+            Response.StatusCode = StatusCode;
+            Response.Errors = errorList;
             return this;
         }
         public BaseResponse<T> InternalError()
         {
             StatusCode = 500;
+            Response.StatusCode = StatusCode;
+            return this;
+        }
+        public BaseResponse<T> Created()
+        {
+            StatusCode = 201;
             Response.StatusCode = StatusCode;
             return this;
         }
