@@ -1,0 +1,541 @@
+[
+  {
+    "sourceId": 1,
+    "url": "https://www.bbc.co.uk/",
+    "name": "BBC UK",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 2,
+    "url": "https://www.bbc.com/",
+    "name": "BBC US",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 3,
+    "url": "https://www.edition.cnn.com/",
+    "name": "Edition CNN",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 4,
+    "url": "https://www.cnn.com/",
+    "name": "CNN",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 5,
+    "url": "https://www.nytimes.com/",
+    "name": "NY Times",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 6,
+    "url": "https://www.dailymail.co.uk/",
+    "name": "Daily Mail",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 7,
+    "url": "https://www.theguardian.com/",
+    "name": "The Guardian",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 8,
+    "url": "https://www.foxnews.com/",
+    "name": "Fox News",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 9,
+    "url": "https://www.finance.yahoo.com/",
+    "name": "Yahoo Finance",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 10,
+    "url": "https://www.washingtonpost.com/",
+    "name": "Washington Post",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 11,
+    "url": "https://www.cnbc.com/",
+    "name": "CNBC",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 12,
+    "url": "https://www.express.co.uk/",
+    "name": "Express UK",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 13,
+    "url": "https://www.usatoday.com/",
+    "name": "USA Today",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 14,
+    "url": "https://www.buzzfeed.com/us/",
+    "name": "Buzzfeed",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 15,
+    "url": "https://www.nypost.com/",
+    "name": "NY Post",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 16,
+    "url": "https://www.businessinsider.com/",
+    "name": "Businessinsider",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 17,
+    "url": "https://www.forbes.com/",
+    "name": "Forbes",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 18,
+    "url": "https://www.abc.net.au/",
+    "name": "ABC AU",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 19,
+    "url": "https://www.mirror.co.uk/",
+    "name": "Mirror UK",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 20,
+    "url": "https://www.techcrunch.com/",
+    "name": "TechCrunch",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 21,
+    "url": "https://www.aljazeera.com/",
+    "name": "Al Jazeera",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 22,
+    "url": "https://www.defence-blog.com/",
+    "name": "Defence blog",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 23,
+    "url": "https://www.globalissues.org/",
+    "name": "Global Issues",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 24,
+    "url": "https://www.thecipherbrief.com/",
+    "name": "The Cipher Brief",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 25,
+    "url": "https://www.worldnewssuperfast.blogspot.com/",
+    "name": "World News Super Fast",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 26,
+    "url": "https://www.rt.com/news/",
+    "name": "RT World News",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 27,
+    "url": "https://www.npr.org/",
+    "name": "National Public Radio",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 28,
+    "url": "https://www.abcnews.go.com/",
+    "name": "ABC News",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 29,
+    "url": "https://www.cbsnews.com/",
+    "name": "CBS",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 30,
+    "url": "https://www.sputniknews.com/",
+    "name": "Sputnik",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 31,
+    "url": "https://www.independent.co.uk/",
+    "name": "The Independent",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 32,
+    "url": "https://www.cbc.ca/",
+    "name": "CBC",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 33,
+    "url": "https://www.latimes.com/",
+    "name": "LA Times",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 34,
+    "url": "https://www.time.com/",
+    "name": "Time",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 35,
+    "url": "https://www.thesun.co.uk/",
+    "name": "The Sun",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 36,
+    "url": "https://www.euronews.com/",
+    "name": "Euro News",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 37,
+    "url": "https://www.vox.com/",
+    "name": "Vox",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 38,
+    "url": "https://www.seattletimes.com/",
+    "name": "The Seattle Times",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 39,
+    "url": "https://www.channelnewsasia.com/",
+    "name": "Channel News Asia",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 40,
+    "url": "https://www.globalnews.ca/",
+    "name": "Global News",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 41,
+    "url": "https://www.smh.com.au/",
+    "name": "The Sydney Morning Herald",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 42,
+    "url": "https://www.france24.com/en/",
+    "name": "France 24",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 43,
+    "url": "https://www.scmp.com/",
+    "name": "South China Morning Post",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 44,
+    "url": "https://www.eluniversal.com.mx/",
+    "name": "El Universal",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 45,
+    "url": "https://www.debate.com.mx/",
+    "name": "El Debate",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 46,
+    "url": "https://www.excelsior.com.mx/",
+    "name": "Excelsior",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 47,
+    "url": "https://www.reforma.com/",
+    "name": "Reforma",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 48,
+    "url": "https://www.vanguardia.com.mx/",
+    "name": "Vanguardia",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 49,
+    "url": "https://www.elsiglodetorreon.com.mx/",
+    "name": "El Siglo de Torreón",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 50,
+    "url": "https://www.mexiconewsdaily.com/",
+    "name": "Mexico News Daily",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 51,
+    "url": "https://www.razon.com.mx/",
+    "name": "La Razón",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 52,
+    "url": "https://www.jornada.com.mx/",
+    "name": "La Jornada",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 53,
+    "url": "https://www.milenio.com/",
+    "name": "Milenio",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 54,
+    "url": "https://www.diario.mx/",
+    "name": "Diario MX",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 55,
+    "url": "https://www.proceso.com.mx/",
+    "name": "Proceso",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 56,
+    "url": "https://www.elfinanciero.com.mx/",
+    "name": "El Financiero",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 57,
+    "url": "https://www.sdpnoticias.com/",
+    "name": "SDP Noticias",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 58,
+    "url": "https://www.sinembargo.mx/",
+    "name": "Sin Embargo",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 59,
+    "url": "https://www.publimetro.com.mx/mx/",
+    "name": "Publimetro",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 60,
+    "url": "https://www.elnorte.com/",
+    "name": "El Norte",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 61,
+    "url": "https://www.radioformula.com.mx/",
+    "name": "Radio Fórmula",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 62,
+    "url": "https://www.informador.mx/",
+    "name": "El Informador Jalisco",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 63,
+    "url": "https://www.24-horas.mx/",
+    "name": "24 Horas México",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 64,
+    "url": "https://imparcialoaxaca.mx/",
+    "name": "El Imparcial Oaxaca",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 65,
+    "url": "https://www.diariobasta.com/",
+    "name": "Diario Basta Hidalgo",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 66,
+    "url": "https://www.theyucatantimes.com/",
+    "name": "The Yucatán Times",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 67,
+    "url": "https://www.presencia.mx/default.aspx/",
+    "name": "Precencia Veracruz",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 68,
+    "url": "https://www.quequi.com.mx/",
+    "name": "Quequi",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 69,
+    "url": "https://www.plazajuarez.mx/",
+    "name": "Diario Plaza Juárez",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 70,
+    "url": "https://www.8columnas.com.mx/",
+    "name": "8 Columnas",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 71,
+    "url": "http://www.expresochiapas.com/",
+    "name": "Expreso Chiapas",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 72,
+    "url": "https://www.capitalqueretaro.com.mx/",
+    "name": "Capital Querétaro",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 73,
+    "url": "https://www.grupometropoli.net/",
+    "name": "Grupo Metropoli",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 74,
+    "url": "https://www.novedadescampeche.com.mx/",
+    "name": "Novedades Campeche",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 75,
+    "url": "http://www.naimexico.com/news/",
+    "name": "NAI México",
+    "isActive": true,
+    "languageId": 1
+  },
+  {
+    "sourceId": 76,
+    "url": "https://www.es.gizmodo.com/",
+    "name": "Gizmodo en español",
+    "isActive": true,
+    "languageId": 2
+  },
+  {
+    "sourceId": 77,
+    "url": "https://www.gizmodo.com/",
+    "name": "Gizmodo",
+    "isActive": true,
+    "languageId": 1
+  }
+]
