@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.EntityFrameworkCore;
 using NotiCore.API.Helpers;
 using NotiCore.API.Infraestructure.RequestValidators;
 using NotiCore.API.Models.DataContext;
@@ -51,7 +52,24 @@ namespace NotiCore.API.Services.Implementation
             
             return _context.Sources.SingleOrDefault(s=> s.SourceId == AddedSource.Entity.SourceId);
         }
+        public IEnumerable<Source> GetSources(string query, int languageId)
+        {
+            query = query.ToLower();
+            IEnumerable<Source> sources;
+            sources = query == null? 
+                _context.Sources.Include(s=>s.Language).OrderBy(s => s.Name) :
+                _context.Sources.Include(s => s.Language).Where(s => s.Name.ToLower().Contains(query) || s.Url.Contains(query)).OrderBy(s => s.Name);
+            
+            if (languageId != 0)
+            {
+                if( _context.Languages.SingleOrDefault(l => l.LanguageId == languageId) == null )
+                    ErrorsHelper.ThrowValidationError("Language not found", "Language with id: " + languageId.ToString() + " was not found", "languageId");
 
+                sources = sources.Where(s => s.LanguageId == languageId);
+            }
+
+            return sources;
+        }
         public async Task<bool> IsValidNewsSiteAsync(string url)
         {
             var prediction = await _predictionService.GetPredictionFromUrlAsync(url);

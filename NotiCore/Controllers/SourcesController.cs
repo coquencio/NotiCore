@@ -49,5 +49,25 @@ namespace NotiCore.API.Controllers
                     .InternalError();
             }
         }
+
+        [HttpGet]
+        public BaseResponse<IEnumerable<Source>> GetSources([FromQuery] string query, [FromQuery] int languageId = 0)
+        {
+            try
+            {
+                var sources = _sourceService.GetSources(query, languageId);
+                return new BaseResponse<IEnumerable<Source>>(sources, "Retrieved Sources");
+            }
+            catch (ValidationException ex)
+            {
+                return new BaseResponse<IEnumerable<Source>>(null, ex.Message)
+                    .BadRequest(ex.Errors.Select(e => e.ErrorMessage));
+            }
+            catch (Exception)
+            {
+                return new BaseResponse<IEnumerable<Source>>(null, "Unknown Error")
+                    .InternalError();
+            }
+        }
     }
 }

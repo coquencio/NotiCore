@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace NotiCore.API.Models.DataContext
@@ -21,13 +23,20 @@ namespace NotiCore.API.Models.DataContext
         public DbSet<TopicSubscription> TopicSubscriptions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            FileStream openStream = File.OpenRead("Infraestructure/Seeds/SeedSources.json");
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            var SourcesSeed = JsonSerializer.DeserializeAsync<Source[]>(openStream, options).GetAwaiter().GetResult();
+            
             modelBuilder.Entity<Subscriber>()
                 .HasIndex(p => new { p.Email })
                 .IsUnique(true);
 
             modelBuilder.Entity<Source>()
                .HasIndex(p => new { p.Url })
-               .IsUnique(true);
+               .IsUnique(true);   
 
             modelBuilder.Entity<Article>()
                 .HasIndex(p => new { p.Url, p.SourceId, p.TopicId });
@@ -37,8 +46,12 @@ namespace NotiCore.API.Models.DataContext
             new Language { LanguageId = 2, Description = "Spanish", Abbreviation = "ES", IsActive = true }
             );
 
+            modelBuilder.Entity<Source>()
+                .HasData(SourcesSeed);
+
+
             modelBuilder.Entity<Topic>().HasData(
-                new Topic{TopicId= 1, Description = "Tech", IsActive = true},
+                new Topic { TopicId = 1, Description = "Tech", IsActive = true },
                 new Topic { TopicId = 2, Description = "News", IsActive = true },
                 new Topic { TopicId = 3, Description = "Business", IsActive = true },
                 new Topic { TopicId = 4, Description = "Science", IsActive = true },
