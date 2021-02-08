@@ -10,6 +10,7 @@ namespace NotiCore.API.Services
     public interface ISourceService
     {
         Task<Source> AddSourceAsync(AddSourceRequest SourceRequest);
+        IEnumerable<Source> GetSources(string query = null, int languageId = 0);
         Task<bool> IsValidNewsSiteAsync(string url);
     }
 }
