@@ -3,7 +3,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using NotiCore.API.Helpers;
-using NotiCore.API.Infraestructure.RequestValidators;
+using NotiCore.API.Infraestructure.Validators;
 using NotiCore.API.Models.DataContext;
 using NotiCore.API.Models.Requests;
 using System;

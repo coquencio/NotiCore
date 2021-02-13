@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NotiCore.API.Infraestructure.RequestValidators
+namespace NotiCore.API.Infraestructure.Validators
 {
     public class AddSourceRequestValidator : AbstractValidator<AddSourceRequest>
     {
