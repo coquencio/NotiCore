@@ -1,10 +1,15 @@
-﻿using NotiCore.API.Helpers;
+﻿using FluentValidation;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using NotiCore.API.Helpers;
+using NotiCore.API.Models.ScrappedArticles;
 using NotiCore.API.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace NotiCore.API.Services.Implementation
@@ -12,15 +17,25 @@ namespace NotiCore.API.Services.Implementation
     public class ScraperService : IScraperService
     {
         private readonly HttpClient _client;
-        public ScraperService(HttpClient client)
+        private readonly IPythonService _pythonService;
+        private JsonSerializerSettings _pythonObjectOptions;
+        public ScraperService(HttpClient client, IPythonService pythonService)
         {
             _client = client;
+            _pythonService = pythonService;
+            _pythonObjectOptions = new JsonSerializerSettings
+            {
+                ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new SnakeCaseNamingStrategy()
+                }
+            };
         }
+
         public async Task<string> ExtractWordsFromUrlAsync(string url)
         {
             var html = await ExtractHtml(url);
             return ExtractWordsFromHtml(html);
-
         }
 
         private async Task<string> ExtractHtml (string url)
@@ -32,6 +47,23 @@ namespace NotiCore.API.Services.Implementation
                 return await _client.GetStringAsync(url);
             }
             throw new HttpRequestException("Invalid Url provided");
+        }
+        public IEnumerable<ArticleBaseModel> ExtractNewsFromSource(string url)
+        {
+            if (UrlCustomHelper.IsValidUrl(url))
+            {
+                var libraries = new string[]
+                {
+                    "newscatcher",
+                    "json"
+                };
+                var code = $"json_result = json.dumps(newscatcher.Newscatcher(website = '{url}').get_news()['articles'])";
+                var pythonDict = _pythonService.ExecutePythonCode(libraries, code, new string[] { "json_result" });
+                var json = pythonDict["json_result"];
+                return JsonConvert.DeserializeObject<ArticleBaseModel[]>(json, _pythonObjectOptions);
+            }
+            throw new ValidationException("Invalid Url");
+            
         }
         #region private methods
         private string ExtractWordsFromHtml(string html)

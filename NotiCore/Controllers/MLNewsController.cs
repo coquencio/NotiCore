@@ -36,6 +36,7 @@ namespace NotiCore.API.Controllers
             }
             catch (HttpRequestException ex)
             {
+                _logger.LogError(ex, "Error ocurred when trying to pull data from {url}", $"url: {urlRequest.Url}");
                 return new BaseResponse<PredictNewsWebsiteOutput>(null, ex.Message)
                      .BadRequest();
                 throw;

@@ -2,6 +2,7 @@
 using Python.Runtime;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,13 +10,17 @@ namespace NotiCore.API.Services.Implementation
 {
     public class PythonService : IPythonService
     {
-        public static void SetupModules(params string[] wheelPaths)
+        public static void SetupModules(params string[] wheelNames)
         {
+            const string libsPath = @"Infraestructure/PythonLibs/";
+            const string tempPath = @"Infraestructure/";
             Installer.SetupPython().GetAwaiter().GetResult();
             Installer.TryInstallPip();
-            foreach (var wheelPath in wheelPaths)
+            foreach (var wheelName in wheelNames)
             {
-                Installer.InstallWheel(wheelPath).GetAwaiter().GetResult();
+                File.Copy(libsPath + wheelName, tempPath + wheelName, true);
+                Installer.InstallWheel(wheelName).GetAwaiter().GetResult();
+                File.Move(tempPath + wheelName, libsPath + wheelName, true);
             }
         }
 

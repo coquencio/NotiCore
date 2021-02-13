@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NotiCore.API.Infraestructure.Response;
 using NotiCore.API.Models.DataContext;
 using NotiCore.API.Models.Requests;
@@ -17,9 +18,11 @@ namespace NotiCore.API.Controllers
     [ApiController]
     public class SourcesController : ControllerBase
     {
-        private readonly ISourceService _sourceService; 
-        public SourcesController(ISourceService sourceService)
+        private readonly ISourceService _sourceService;
+        private readonly ILogger<SourcesController> _logger;
+        public SourcesController(ISourceService sourceService, ILogger<SourcesController> logger)
         {
+            _logger = logger;
             _sourceService = sourceService;
         }
 
@@ -39,12 +42,14 @@ namespace NotiCore.API.Controllers
             }
             catch (HttpRequestException ex)
             {
+                _logger.LogError(ex, "Error ocurred when trying to pull data from {url}", $"url: {request.Url}");
                 return new BaseResponse<Source>(null, ex.Message)
                      .BadRequest();
                 throw;
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error ocurred when trying to add source from request {request}", $"request: {request}");
                 return new BaseResponse<Source>(null, ex.Message)
                     .InternalError();
             }
@@ -63,8 +68,9 @@ namespace NotiCore.API.Controllers
                 return new BaseResponse<IEnumerable<Source>>(null, ex.Message)
                     .BadRequest(ex.Errors.Select(e => e.ErrorMessage));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Error ocurred when trying to pull data from {query}", $"query: {query}");
                 return new BaseResponse<IEnumerable<Source>>(null, "Unknown Error")
                     .InternalError();
             }
