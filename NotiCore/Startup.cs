@@ -13,6 +13,8 @@ using NotiCore.API.Infraestructure.Automapper;
 using NotiCore.API.Models.DataContext;
 using NotiCore.API.Services;
 using NotiCore.API.Services.Implementation;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +27,14 @@ namespace NotiCore
     {
         public Startup(IConfiguration configuration)
         {
+            Log.Logger = new LoggerConfiguration()
+             .WriteTo
+             .MSSqlServer(
+                 connectionString: configuration.GetConnectionString("DBContection"),
+                 sinkOptions: new MSSqlServerSinkOptions { TableName = "LogEvents" , AutoCreateSqlTable = true},
+                 restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error)
+             .CreateLogger();
+
             Configuration = configuration;
         }
 
@@ -57,17 +67,14 @@ namespace NotiCore
             services.AddSingleton<IMLNewsWebsiteModel>(x => new MLNewsWebsiteModel(@"../NotiCoreML.Model/MLModel.zip"));
             
             // Python Setup
-            // To Do: Make file relocation dynamic
-            File.Copy(@"Infraestructure/PythonLibs/newscatcher-0.2.0-py3-none-any.whl", @"Infraestructure/newscatcher-0.2.0-py3-none-any.whl", true);
-            PythonService.SetupModules(@"Infraestructure/PythonLibs/newscatcher-0.2.0-py3-none-any.whl");
-            File.Move(@"Infraestructure/newscatcher-0.2.0-py3-none-any.whl", @"Infraestructure/PythonLibs/newscatcher-0.2.0-py3-none-any.whl", true);
+            PythonService.SetupModules("newscatcher-0.2.0-py3-none-any.whl");
 
             services.AddSingleton<IPythonService, PythonService>();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -75,7 +82,7 @@ namespace NotiCore
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NotiCore v1"));
             }
-
+            loggerFactory.AddSerilog();
             app.UseHttpsRedirection();
 
             app.UseRouting();
