@@ -48,7 +48,7 @@ namespace NotiCore.API.Services.Implementation
             }
             throw new HttpRequestException("Invalid Url provided");
         }
-        public IEnumerable<RTExample> ExtractRTNews(string url)
+        public IEnumerable<ArticleBaseModel> ExtractNewsFromSource(string url)
         {
             if (UrlCustomHelper.IsValidUrl(url))
             {
@@ -60,7 +60,7 @@ namespace NotiCore.API.Services.Implementation
                 var code = $"json_result = json.dumps(newscatcher.Newscatcher(website = '{url}').get_news()['articles'])";
                 var pythonDict = _pythonService.ExecutePythonCode(libraries, code, new string[] { "json_result" });
                 var json = pythonDict["json_result"];
-                return JsonConvert.DeserializeObject<RTExample[]>(json, _pythonObjectOptions);
+                return JsonConvert.DeserializeObject<ArticleBaseModel[]>(json, _pythonObjectOptions);
             }
             throw new ValidationException("Invalid Url");
             
