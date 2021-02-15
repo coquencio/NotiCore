@@ -47,6 +47,12 @@ namespace NotiCore.API.Infraestructure.Response
             Response.StatusCode = StatusCode;
             return this;
         }
+        public BaseResponse<T> NotFound()
+        {
+            StatusCode = 404;
+            Response.StatusCode = StatusCode;
+            return this;
+        }
 
     }
 }

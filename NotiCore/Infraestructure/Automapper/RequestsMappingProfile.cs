@@ -13,6 +13,7 @@ namespace NotiCore.API.Infraestructure.Automapper
         public RequestsMappingProfile()
         {
             CreateMap<AddSourceRequest, Source> ();
+            CreateMap<AddUserRequest, User>();
         }
     }
 }

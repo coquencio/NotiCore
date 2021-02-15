@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 namespace NotiCore.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class SourcesController : ControllerBase
     {
@@ -28,6 +30,7 @@ namespace NotiCore.API.Controllers
 
         [HttpPost]
         [Route("Add")]
+        [Authorize(Policy = "Admin")]
         public async Task<BaseResponse<Source>> AddSourceAsync([FromBody] AddSourceRequest request)
         {
             try

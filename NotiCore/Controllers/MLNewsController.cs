@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NotiCore.API.Infraestructure.Response;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace NotiCore.API.Controllers
 {
     [Route("api/NewsPredictions")]
+    [Authorize]
     [ApiController]
     public class MLNewsController : ControllerBase
     {

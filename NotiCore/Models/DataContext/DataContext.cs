@@ -21,6 +21,7 @@ namespace NotiCore.API.Models.DataContext
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<Topic> Topic { get; set; }
         public DbSet<TopicSubscription> TopicSubscriptions { get; set; }
+        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             FileStream openStream = File.OpenRead("Infraestructure/Seeds/SeedSources.json");
@@ -29,7 +30,11 @@ namespace NotiCore.API.Models.DataContext
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
             var SourcesSeed = JsonSerializer.DeserializeAsync<Source[]>(openStream, options).GetAwaiter().GetResult();
-            
+
+            modelBuilder.Entity<User>()
+                .HasIndex(p => new { p.UserName})
+                .IsUnique(true);
+
             modelBuilder.Entity<Subscriber>()
                 .HasIndex(p => new { p.Email })
                 .IsUnique(true);

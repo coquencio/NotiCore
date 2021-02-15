@@ -54,7 +54,7 @@ namespace NotiCore.API.Services.Implementation
         }
         public IEnumerable<Source> GetSources(string query, int languageId)
         {
-            query = query.ToLower();
+            query = query == null ? query : query.ToLower();
             IEnumerable<Source> sources;
             sources = query == null? 
                 _context.Sources.Include(s=>s.Language).OrderBy(s => s.Name) :
