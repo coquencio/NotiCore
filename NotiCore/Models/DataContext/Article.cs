@@ -18,7 +18,7 @@ namespace NotiCore.API.Models.DataContext
 
         public string Authors { get; set; }
 
-        public int TopicId { get; set; }
+        public int? TopicId { get; set; }
         public Topic Topic { get; set; }
 
         public int SourceId { get; set; }

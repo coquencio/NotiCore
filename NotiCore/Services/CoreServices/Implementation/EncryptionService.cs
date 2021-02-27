@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Aes = System.Security.Cryptography.Aes;
 
-namespace NotiCore.API.Services.Implementation
+namespace NotiCore.API.Services.CoreServices.Implementation
 {
     public class EncryptionService : IEncryptionService
     {

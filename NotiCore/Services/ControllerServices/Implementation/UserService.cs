@@ -4,12 +4,13 @@ using NotiCore.API.Helpers;
 using NotiCore.API.Infraestructure.Validators;
 using NotiCore.API.Models.DataContext;
 using NotiCore.API.Models.Requests;
+using NotiCore.API.Services.CoreServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NotiCore.API.Services.Implementation
+namespace NotiCore.API.Services.ControllerServices.Implementation
 {
     public class UserService : IUserService
     {

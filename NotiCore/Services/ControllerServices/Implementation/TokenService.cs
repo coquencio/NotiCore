@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using NotiCore.API.Helpers;
 using NotiCore.API.Models.DataContext;
 using NotiCore.API.Models.Requests;
+using NotiCore.API.Services.CoreServices;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,7 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotiCore.API.Services.Implementation
+namespace NotiCore.API.Services.ControllerServices.Implementation
 {
     public class TokenService : ITokenService
     {

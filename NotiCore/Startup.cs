@@ -13,8 +13,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NotiCore.API.Infraestructure.Automapper;
 using NotiCore.API.Models.DataContext;
-using NotiCore.API.Services;
-using NotiCore.API.Services.Implementation;
+using NotiCore.API.Services.CoreServices.Implementation;
+using NotiCore.API.Services.CoreServices;
+using NotiCore.API.Services.ControllerServices.Implementation;
+using NotiCore.API.Services.ControllerServices;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using System;
@@ -60,29 +62,25 @@ namespace NotiCore
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NotiCore", Version = "v1" });
             });
             services.AddDbContext<DataContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DBContection")));
-
-            services.AddHttpClient<IScraperService, ScraperService>();
-
-            services.AddScoped<IPredictNewsWebsiteService, PredictNewsWebsiteService>();
-
-            services.AddScoped<ISourceService, SourceService>();
-
-            services.AddScoped<IUserService, UserService>();
-
-            services.AddScoped<ISubscriberService, SubscriberService>();
-
-            services.AddScoped<ITokenService, TokenService>();
-
-            services.AddSingleton<IMLNewsWebsiteModel>(x => new MLNewsWebsiteModel(@"../NotiCoreML.Model/MLModel.zip"));
             
-            // Python Setup
+            // Core services
+            services.AddHttpClient<IScraperService, ScraperService>();
             PythonService.SetupModules("newscatcher-0.2.0-py3-none-any.whl");
-
             services.AddSingleton<IPythonService, PythonService>();
-
             string encryptionKey = Configuration["EncryptionKey"];
             services.AddScoped<IEncryptionService>(s => new EncryptionService(encryptionKey));
+            services.AddSingleton<IMLNewsWebsiteModel>(x => new MLNewsWebsiteModel(@"../NotiCoreML.Model/MLModel.zip"));
 
+            // Controller Services
+            services.AddScoped<ISourceService, SourceService>();
+            services.AddScoped<IPredictNewsWebsiteService, PredictNewsWebsiteService>();
+            services.AddScoped<ISubscriberService, SubscriberService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IArticleService, ArticleService>();
+
+
+            // Authentication and authorization
             var key = Encoding.UTF8.GetBytes(encryptionKey);
             services
                 .AddAuthentication(x =>

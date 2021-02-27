@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NotiCore.API.Infraestructure.Response;
 using NotiCore.API.Models.Requests;
-using NotiCore.API.Services;
+using NotiCore.API.Services.ControllerServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using NotiCore.API.Infraestructure.Response;
 using NotiCore.API.Models.Requests;
 using NotiCore.API.Models.Response;
-using NotiCore.API.Services;
+using NotiCore.API.Services.ControllerServices;
 using Serilog;
 using System;
 using System.Collections.Generic;

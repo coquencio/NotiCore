@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using NotiCore.API.Infraestructure.Response;
 using NotiCore.API.Models.DataContext;
 using NotiCore.API.Models.Requests;
-using NotiCore.API.Services;
+using NotiCore.API.Services.ControllerServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +22,9 @@ namespace NotiCore.API.Controllers
     {
         private readonly ISourceService _sourceService;
         private readonly ILogger<SourcesController> _logger;
-        public SourcesController(ISourceService sourceService, ILogger<SourcesController> logger)
+        public SourcesController(
+            ISourceService sourceService,
+            ILogger<SourcesController> logger)
         {
             _logger = logger;
             _sourceService = sourceService;
