@@ -12,7 +12,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace NotiCore.API.Services.Implementation
+namespace NotiCore.API.Services.CoreServices.Implementation
 {
     public class ScraperService : IScraperService
     {

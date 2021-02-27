@@ -1,10 +1,11 @@
 ﻿using NotiCore.API.Models.MachineLearning.PredictNewsWebsite;
+using NotiCore.API.Services.CoreServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NotiCore.API.Services.Implementation
+namespace NotiCore.API.Services.ControllerServices.Implementation
 {
     public class PredictNewsWebsiteService : IPredictNewsWebsiteService
     {

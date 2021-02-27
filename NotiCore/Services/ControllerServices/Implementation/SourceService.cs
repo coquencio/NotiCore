@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NotiCore.API.Services.Implementation
+namespace NotiCore.API.Services.ControllerServices.Implementation
 {
     public class SourceService : ISourceService
     {
@@ -54,7 +54,7 @@ namespace NotiCore.API.Services.Implementation
         }
         public IEnumerable<Source> GetSources(string query, int languageId)
         {
-            query = query.ToLower();
+            query = query == null ? query : query.ToLower();
             IEnumerable<Source> sources;
             sources = query == null? 
                 _context.Sources.Include(s=>s.Language).OrderBy(s => s.Name) :
