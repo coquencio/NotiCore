@@ -21,7 +21,7 @@ namespace NotiCoreML.ConsoleApp
         public static void CreateModel()
         {
             // Load Data
-            IDataView trainingDataView = mlContext.Data.LoadFromTextFile<ModelInput>(
+            IDataView trainingDataView = mlContext.Data.LoadFromTextFile<NewsModelInput>(
                                             path: TRAIN_DATA_FILEPATH,
                                             hasHeader: true,
                                             separatorChar: ',',

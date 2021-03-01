@@ -4,7 +4,7 @@ using Microsoft.ML.Data;
 
 namespace NotiCoreTopicML.Model
 {
-    public class ModelInput
+    public class TopicModelInput
     {
         [ColumnName("topic"), LoadColumn(0)]
         public string Topic { get; set; }

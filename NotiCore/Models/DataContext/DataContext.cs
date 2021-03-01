@@ -45,6 +45,10 @@ namespace NotiCore.API.Models.DataContext
 
             modelBuilder.Entity<Article>()
                 .HasIndex(p => new { p.Url, p.SourceId, p.TopicId });
+            
+            modelBuilder.Entity<Article>()
+                .Property(b => b.TopicId)
+                .HasDefaultValue(14);
 
             modelBuilder.Entity<Language>().HasData(
             new Language { LanguageId = 1, Description = "English", Abbreviation = "EN", IsActive = true },
@@ -57,7 +61,7 @@ namespace NotiCore.API.Models.DataContext
 
             modelBuilder.Entity<Topic>().HasData(
                 new Topic { TopicId = 1, Description = "Tech", IsActive = true },
-                new Topic { TopicId = 2, Description = "News", IsActive = true },
+                new Topic { TopicId = 2, Description = "News", IsActive = false },
                 new Topic { TopicId = 3, Description = "Business", IsActive = true },
                 new Topic { TopicId = 4, Description = "Science", IsActive = true },
                 new Topic { TopicId = 5, Description = "Finance", IsActive = true },
@@ -68,7 +72,8 @@ namespace NotiCore.API.Models.DataContext
                 new Topic { TopicId = 10, Description = "Entertainment", IsActive = true },
                 new Topic { TopicId = 11, Description = "Music", IsActive = true },
                 new Topic { TopicId = 12, Description = "Sport", IsActive = true },
-                new Topic { TopicId = 13, Description = "World", IsActive = true }
+                new Topic { TopicId = 13, Description = "World", IsActive = false },
+                new Topic { TopicId = 14, Description = "Other", IsActive = true }
                 );
 
         }

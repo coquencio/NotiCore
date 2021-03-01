@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,8 +18,7 @@ namespace NotiCore.API.Models.DataContext
         public string Url { get; set; }
 
         public string Authors { get; set; }
-
-        public int? TopicId { get; set; }
+        public int TopicId { get; set; }
         public Topic Topic { get; set; }
 
         public int SourceId { get; set; }
@@ -27,6 +27,7 @@ namespace NotiCore.API.Models.DataContext
         public DateTime ScrapedDate { get; set; }
         public string ImageSource { get; set; }
         public bool Sent { get; set; }
+        public float Accuracy { get; set; }
 
     }
 }

@@ -11,17 +11,17 @@ namespace NotiCoreML.Model
 {
     public class ConsumeModel
     {
-        private static Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictionEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(CreatePredictionEngine);
+        private static Lazy<PredictionEngine<NewsModelInput, NewsModelOutput>> PredictionEngine = new Lazy<PredictionEngine<NewsModelInput, NewsModelOutput>>(CreatePredictionEngine);
 
         // For more info on consuming ML.NET models, visit https://aka.ms/mlnet-consume
         // Method for consuming model in your app
-        public static ModelOutput Predict(ModelInput input)
+        public static NewsModelOutput Predict(NewsModelInput input)
         {
-            ModelOutput result = PredictionEngine.Value.Predict(input);
+            NewsModelOutput result = PredictionEngine.Value.Predict(input);
             return result;
         }
 
-        public static PredictionEngine<ModelInput, ModelOutput> CreatePredictionEngine()
+        public static PredictionEngine<NewsModelInput, NewsModelOutput> CreatePredictionEngine()
         {
             // Create new MLContext
             MLContext mlContext = new MLContext();
@@ -29,7 +29,7 @@ namespace NotiCoreML.Model
             // Load model & create prediction engine
             string modelPath = @"";
             ITransformer mlModel = mlContext.Model.Load(modelPath, out var modelInputSchema);
-            var predEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
+            var predEngine = mlContext.Model.CreatePredictionEngine<NewsModelInput, NewsModelOutput>(mlModel);
 
             return predEngine;
         }
