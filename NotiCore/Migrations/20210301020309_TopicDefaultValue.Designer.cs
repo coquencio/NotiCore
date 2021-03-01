@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NotiCore.API.Models.DataContext;
 
 namespace NotiCore.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210301020309_TopicDefaultValue")]
+    partial class TopicDefaultValue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,9 +27,6 @@ namespace NotiCore.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
-
-                    b.Property<float>("Accuracy")
-                        .HasColumnType("real");
 
                     b.Property<string>("Authors")
                         .HasColumnType("nvarchar(max)");
@@ -53,10 +52,8 @@ namespace NotiCore.API.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TopicId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(14);
+                    b.Property<int?>("TopicId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Url")
                         .IsRequired()
@@ -990,9 +987,7 @@ namespace NotiCore.API.Migrations
 
                     b.HasOne("NotiCore.API.Models.DataContext.Topic", "Topic")
                         .WithMany()
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TopicId");
 
                     b.Navigation("Source");
 

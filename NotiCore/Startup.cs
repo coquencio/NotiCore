@@ -25,6 +25,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hangfire;
+using Hangfire.SqlServer;
 
 namespace NotiCore
 {
@@ -69,7 +71,7 @@ namespace NotiCore
             services.AddSingleton<IPythonService, PythonService>();
             string encryptionKey = Configuration["EncryptionKey"];
             services.AddScoped<IEncryptionService>(s => new EncryptionService(encryptionKey));
-            services.AddSingleton<IMLNewsWebsiteModel>(x => new MLNewsWebsiteModel(@"../NotiCoreML.Model/MLModel.zip"));
+            services.AddSingleton<IMLService>(x => new MLService(@"../NotiCoreML.Model/MLModel.zip", @"../NotiCoreTopicML.Model/MLModel.zip"));
 
             // Controller Services
             services.AddScoped<ISourceService, SourceService>();
@@ -79,6 +81,20 @@ namespace NotiCore
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IArticleService, ArticleService>();
 
+            // Add Hangfire services.
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(Configuration.GetConnectionString("DBContection"), new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    DisableGlobalLocks = true
+                }));
+            services.AddHangfireServer();
 
             // Authentication and authorization
             var key = Encoding.UTF8.GetBytes(encryptionKey);
@@ -110,7 +126,7 @@ namespace NotiCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IBackgroundJobClient backgroundJobs)
         {
             if (env.IsDevelopment())
             {
@@ -119,6 +135,8 @@ namespace NotiCore
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NotiCore v1"));
             }
             loggerFactory.AddSerilog();
+            app.UseHangfireDashboard();
+            // backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -128,6 +146,7 @@ namespace NotiCore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHangfireDashboard();
             });
         }
     }

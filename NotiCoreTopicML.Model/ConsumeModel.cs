@@ -5,23 +5,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.ML;
-using NotiCoreML.Model;
+using NotiCoreTopicML.Model;
 
-namespace NotiCoreML.Model
+namespace NotiCoreTopicML.Model
 {
     public class ConsumeModel
     {
-        private static Lazy<PredictionEngine<NewsModelInput, NewsModelOutput>> PredictionEngine = new Lazy<PredictionEngine<NewsModelInput, NewsModelOutput>>(CreatePredictionEngine);
+        private static Lazy<PredictionEngine<TopicModelInput, TopicModelOutput>> PredictionEngine = new Lazy<PredictionEngine<TopicModelInput, TopicModelOutput>>(CreatePredictionEngine);
 
         // For more info on consuming ML.NET models, visit https://aka.ms/mlnet-consume
         // Method for consuming model in your app
-        public static NewsModelOutput Predict(NewsModelInput input)
+        public static TopicModelOutput Predict(TopicModelInput input)
         {
-            NewsModelOutput result = PredictionEngine.Value.Predict(input);
+            TopicModelOutput result = PredictionEngine.Value.Predict(input);
             return result;
         }
 
-        public static PredictionEngine<NewsModelInput, NewsModelOutput> CreatePredictionEngine()
+        public static PredictionEngine<TopicModelInput, TopicModelOutput> CreatePredictionEngine()
         {
             // Create new MLContext
             MLContext mlContext = new MLContext();
@@ -29,7 +29,7 @@ namespace NotiCoreML.Model
             // Load model & create prediction engine
             string modelPath = @"";
             ITransformer mlModel = mlContext.Model.Load(modelPath, out var modelInputSchema);
-            var predEngine = mlContext.Model.CreatePredictionEngine<NewsModelInput, NewsModelOutput>(mlModel);
+            var predEngine = mlContext.Model.CreatePredictionEngine<TopicModelInput, TopicModelOutput>(mlModel);
 
             return predEngine;
         }

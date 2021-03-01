@@ -10,8 +10,8 @@ namespace NotiCore.API.Services.ControllerServices.Implementation
     public class PredictNewsWebsiteService : IPredictNewsWebsiteService
     {
         private readonly IScraperService _scraperService;
-        private readonly IMLNewsWebsiteModel _mLNewsWebsiteModel;
-        public PredictNewsWebsiteService(IScraperService scraperService, IMLNewsWebsiteModel mLNewsWebsiteModel)
+        private readonly IMLService _mLNewsWebsiteModel;
+        public PredictNewsWebsiteService(IScraperService scraperService, IMLService mLNewsWebsiteModel)
         {
             _mLNewsWebsiteModel = mLNewsWebsiteModel;
             _scraperService = scraperService;
@@ -24,7 +24,7 @@ namespace NotiCore.API.Services.ControllerServices.Implementation
             };
 
             // Make a single prediction on the sample data and print results
-            var predictionResult = _mLNewsWebsiteModel.Predict(sampleData);
+            var predictionResult = _mLNewsWebsiteModel.NewsSitePrediction(sampleData);
 
             return predictionResult;
         }

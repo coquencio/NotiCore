@@ -8,6 +8,6 @@ namespace NotiCore.API.Services.ControllerServices
 {
     public interface IArticleService
     {
-        void SaveArticlesFromSource(Source source);
+        Task SaveArticlesFromSourceAsync(Source source);
     }
 }
