@@ -27,6 +27,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Hangfire;
 using Hangfire.SqlServer;
+using MediatR;
+using NotiCore.API.Jobs.Scraper.Commands;
+using NotiCore.API.Helpers;
+using NotiCore.API.Infraestructure.Extensions;
 
 namespace NotiCore
 {
@@ -93,9 +97,10 @@ namespace NotiCore
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true
-                }));
+                })
+                .UseMediator());
             services.AddHangfireServer();
-
+            services.AddMediatR(typeof(ScrapNewsCmd));
             // Authentication and authorization
             var key = Encoding.UTF8.GetBytes(encryptionKey);
             services
@@ -126,7 +131,7 @@ namespace NotiCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IBackgroundJobClient backgroundJobs)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IBackgroundJobClient backgroundJobs, IMediator mediator)
         {
             if (env.IsDevelopment())
             {
@@ -136,7 +141,8 @@ namespace NotiCore
             }
             loggerFactory.AddSerilog();
             app.UseHangfireDashboard();
-            // backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
+            //backgroundJobs.Enqueue<MediatorWrapper> (c => c.Send("Daily news scrap job", new ScrapNewsCmd()));
+            RecurringJob.AddOrUpdate<MediatorWrapper>(c => c.Send("Daily news scrap job", new ScrapNewsCmd()),"0 10 * * *");
             app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace NotiCore.API.Services.CoreServices.Implementation
@@ -48,6 +49,7 @@ namespace NotiCore.API.Services.CoreServices.Implementation
             }
             throw new HttpRequestException("Invalid Url provided");
         }
+        
         public IEnumerable<ArticleBaseModel> ExtractNewsFromSource(string url)
         {
             if (UrlCustomHelper.IsValidUrl(url))
@@ -59,8 +61,11 @@ namespace NotiCore.API.Services.CoreServices.Implementation
                 };
                 var code = $"json_result = json.dumps(newscatcher.Newscatcher(website = '{url}').get_news()['articles'])";
                 var pythonDict = _pythonService.ExecutePythonCode(libraries, code, new string[] { "json_result" });
-                var json = pythonDict["json_result"];
-                return JsonConvert.DeserializeObject<ArticleBaseModel[]>(json, _pythonObjectOptions);
+                string json = null;
+                if(pythonDict.TryGetValue("json_result", out json))
+                    return JsonConvert.DeserializeObject<ArticleBaseModel[]>(json, _pythonObjectOptions);
+
+                return new List<ArticleBaseModel>();
             }
             throw new ValidationException("Invalid Url");
             
@@ -136,15 +141,20 @@ namespace NotiCore.API.Services.CoreServices.Implementation
             result = System.Text.RegularExpressions.Regex.Replace(result, "(\r)( )+(\t)", "\r\t", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
             result = System.Text.RegularExpressions.Regex.Replace(result, "(\r)(\t)+(\r)", "\r\r", System.Text.RegularExpressions.RegexOptions.IgnoreCase);    // Remove redundant tabs
             result = System.Text.RegularExpressions.Regex.Replace(result, "(\r)(\t)+", "\r\t", System.Text.RegularExpressions.RegexOptions.IgnoreCase);        // Remove multible tabs followind a linebreak with just one tab
-            string breaks = "\r\r\r";        // Initial replacement target string for linebreaks
-            string tabs = "\t\t\t\t\t";        // Initial replacement target string for tabs
-            for (int index = 0; index < result.Length; index++)
-            {
-                result = result.Replace(breaks, "\r\r");
-                result = result.Replace(tabs, "\t\t\t\t");
-                breaks = breaks + "\r";
-                tabs = tabs + "\t";
-            }
+            //string breaks = "\r\r\r";        // Initial replacement target string for linebreaks
+            //string tabs = "\t\t\t\t\t";        // Initial replacement target string for tabs
+            result = result.Replace("\t", " ");
+            result = result.Replace("\r", " ");
+            RegexOptions options = RegexOptions.None;
+            Regex regex = new Regex("[ ]{2,}", options);
+            result = regex.Replace(result, " ");
+            //for (int index = 0; index < result.Length; index++)
+            //{
+            //    result = result.Replace(breaks, "\r\r");
+            //    result = result.Replace(tabs, "\t\t\t\t");
+            //    breaks = breaks + "\r";
+            //    tabs = tabs + "\t";
+            //}
             return result;
         }
         #endregion

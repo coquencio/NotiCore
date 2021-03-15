@@ -23,5 +23,6 @@ namespace NotiCore.API.Models.DataContext
         public ICollection<Article> Articles { get; set; }
         [Required]
         public bool IsActive { get; set; }
+        public DateTime LastScrapedDate { get; set; }
     }
 }
