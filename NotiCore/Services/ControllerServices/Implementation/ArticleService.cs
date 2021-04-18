@@ -27,48 +27,63 @@ namespace NotiCore.API.Services.ControllerServices.Implementation
         public async Task SaveArticlesFromSourceAsync(Source source)
         {
             var scrappedArticles = _scraperService.ExtractNewsFromSource(source.Url);
-            var tasks = scrappedArticles.Select(async article => {
-                var toAdd = ResolveArticleEntity(article);
-                toAdd.SourceId = source.SourceId;
+            if (scrappedArticles.Any())
+            {
+                var listToAdd = new List<Article>();
+                var tasks = scrappedArticles.Select(async article => {
+                    var toAdd = ResolveArticleEntity(article);
+                    toAdd.SourceId = source.SourceId;
 
-                toAdd.TopicId = TryGetTopicFromUrl(source.Url, toAdd.Url);
-                if (!string.IsNullOrEmpty(toAdd.Url))
-                {
-                    try
+                    toAdd.TopicId = TryGetTopicFromUrl(source.Url, toAdd.Url);
+                    if (!string.IsNullOrEmpty(toAdd.Url)
+                    && _context.Articles.Where(a => a.Url.Equals(toAdd.Url) && toAdd.SourceId == a.SourceId).Count() == 0)
                     {
-                        if(toAdd.TopicId == (int)Infraestructure.Common.Topic.Other)
+                        try
                         {
-                            var prediction = PredictTopic(toAdd.Summary);
-                            if (prediction.Accuracy < Constants.MinimumTopicAccuracy)
+                            if (toAdd.TopicId == (int)Infraestructure.Common.Topic.Other)
                             {
-                                var text = await _scraperService.ExtractWordsFromUrlAsync(toAdd.Url);
-                                if (!string.IsNullOrEmpty(text))
+                                var prediction = PredictTopic(toAdd.Summary);
+                                if (prediction.Accuracy < Constants.MinimumTopicAccuracy)
                                 {
-                                    var secondPrediction = PredictTopic(text);
-                                    if (secondPrediction.Accuracy > Constants.MinimumTopicAccuracy)
+                                    var text = await _scraperService.ExtractWordsFromUrlAsync(toAdd.Url);
+                                    if (!string.IsNullOrEmpty(text))
                                     {
-                                        toAdd.TopicId = secondPrediction.TopicId;
-                                        toAdd.Accuracy = secondPrediction.Accuracy;
+                                        var secondPrediction = PredictTopic(text);
+                                        if (secondPrediction.Accuracy > Constants.MinimumTopicAccuracy)
+                                        {
+                                            toAdd.TopicId = secondPrediction.TopicId;
+                                            toAdd.Accuracy = secondPrediction.Accuracy;
+                                        }
                                     }
                                 }
-                            }
-                            else
-                            {
-                                toAdd.TopicId = prediction.TopicId;
-                                toAdd.Accuracy= prediction.Accuracy;
+                                else
+                                {
+                                    toAdd.TopicId = prediction.TopicId;
+                                    toAdd.Accuracy = prediction.Accuracy;
+                                }
                             }
                         }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "Error ocurred when trying to pull data from {url} ", $"url: {toAdd.Url}");
+                        }
+                        listToAdd.Add(toAdd);
                     }
-                    catch (Exception ex)
+                });
+                await Task.WhenAll(tasks);
+
+                if (listToAdd.Any())
+                {
+                    _context.Articles.AddRange(listToAdd);
+                    foreach (var entity in listToAdd)
                     {
-                        _logger.LogError(ex, "Error ocurred when trying to pull data from {url} ", $"url: {toAdd.Url}");
+                        entity.ScrapedDate = DateTime.Now;
                     }
                 }
-
-                _context.Add(toAdd);
-            });
-            await Task.WhenAll(tasks);
-            _context.SaveChanges();
+                source.LastScrapedDate = DateTime.Now;
+                _context.Sources.Update(source);
+                _context.SaveChanges();
+            }
         }
         private int TryGetTopicFromUrl(string baseUrl, string fullUrl)
         {
@@ -90,13 +105,14 @@ namespace NotiCore.API.Services.ControllerServices.Implementation
         }
         private Article ResolveArticleEntity(ArticleBaseModel baseModel)
         {
+            var date = new DateTime(); 
+            DateTime.TryParse(baseModel.Published, out date);
             var article = new Article()
             {
                 Title = baseModel.Title,
                 Url = baseModel.Link,
                 Authors = baseModel.Author,
-                PublishedDate = Convert.ToDateTime(baseModel.Published),
-                ScrapedDate = DateTime.Now
+                PublishedDate = date
             };
             ResolveSummary(article, baseModel);
             if (baseModel.MediaContent != null && baseModel.MediaContent.Any())
