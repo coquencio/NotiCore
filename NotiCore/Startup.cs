@@ -31,6 +31,9 @@ using MediatR;
 using NotiCore.API.Jobs.Scraper.Commands;
 using NotiCore.API.Helpers;
 using NotiCore.API.Infraestructure.Extensions;
+using NotiCore.API.Infraestructure.Common;
+using NotiCore.API.Jobs.Notifications;
+using NotiCore.API.Jobs.Mailer.Commands;
 
 namespace NotiCore
 {
@@ -67,23 +70,25 @@ namespace NotiCore
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NotiCore", Version = "v1" });
             });
-            services.AddDbContext<DataContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DBContection")));
+            services.AddDbContext<DataContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DBContection")), ServiceLifetime.Singleton);
             
             // Core services
             services.AddHttpClient<IScraperService, ScraperService>();
             PythonService.SetupModules("newscatcher-0.2.0-py3-none-any.whl");
             services.AddSingleton<IPythonService, PythonService>();
             string encryptionKey = Configuration["EncryptionKey"];
-            services.AddScoped<IEncryptionService>(s => new EncryptionService(encryptionKey));
+            services.AddSingleton<IEncryptionService>(s => new EncryptionService(encryptionKey));
             services.AddSingleton<IMLService>(x => new MLService(@"../NotiCoreML.Model/MLModel.zip", @"../NotiCoreTopicML.Model/MLModel.zip"));
+            services.AddSingleton<IEmailService, EmailService>();
+            services.AddSingleton<IPropertiesService, PropertiesService>();
 
             // Controller Services
-            services.AddScoped<ISourceService, SourceService>();
-            services.AddScoped<IPredictNewsWebsiteService, PredictNewsWebsiteService>();
-            services.AddScoped<ISubscriberService, SubscriberService>();
-            services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IArticleService, ArticleService>();
+            services.AddSingleton<ISourceService, SourceService>();
+            services.AddSingleton<IPredictNewsWebsiteService, PredictNewsWebsiteService>();
+            services.AddSingleton<ISubscriberService, SubscriberService>();
+            services.AddSingleton<ITokenService, TokenService>();
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IArticleService, ArticleService>();
 
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration
@@ -131,7 +136,7 @@ namespace NotiCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IBackgroundJobClient backgroundJobs, IMediator mediator)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IBackgroundJobClient backgroundJobs, IMediator mediator, IPropertiesService propertiesService)
         {
             if (env.IsDevelopment())
             {
@@ -139,10 +144,29 @@ namespace NotiCore
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NotiCore v1"));
             }
+
+            propertiesService
+                .SaveRawProperty(PropertyConstants.MailHost, Configuration
+                .GetSection("MailerValues")
+                .GetSection(PropertyConstants.MailHost).Value);
+            
+            propertiesService
+                .SaveRawProperty(PropertyConstants.MailerAddress, Configuration[PropertyConstants.MailerAddress]);
+            
+            propertiesService
+                .SaveRawProperty(PropertyConstants.MailerPassword, Configuration[PropertyConstants.MailerPassword]);
+
+            propertiesService.SaveRawProperty(PropertyConstants.MailPort, Configuration
+                .GetSection("MailerValues")
+                .GetSection(PropertyConstants.MailPort).Value);
+
+            // Get from json file
             loggerFactory.AddSerilog();
             app.UseHangfireDashboard();
             //backgroundJobs.Enqueue<MediatorWrapper> (c => c.Send("Daily news scrap job", new ScrapNewsCmd()));
+
             RecurringJob.AddOrUpdate<MediatorWrapper>(c => c.Send("Daily news scrap job", new ScrapNewsCmd()),"0 10 * * *");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

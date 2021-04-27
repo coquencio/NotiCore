@@ -34,40 +34,43 @@ namespace NotiCore.API.Services.ControllerServices.Implementation
                     var toAdd = ResolveArticleEntity(article);
                     toAdd.SourceId = source.SourceId;
 
-                    toAdd.TopicId = TryGetTopicFromUrl(source.Url, toAdd.Url);
-                    if (!string.IsNullOrEmpty(toAdd.Url)
-                    && _context.Articles.Where(a => a.Url.Equals(toAdd.Url) && toAdd.SourceId == a.SourceId).Count() == 0)
+                    if (!string.IsNullOrEmpty(toAdd.Url))
                     {
-                        try
+                        toAdd.TopicId = TryGetTopicFromUrl(source.Url, toAdd.Url);
+                        if (_context.Articles.Where(a => a.Url.Equals(toAdd.Url) && toAdd.SourceId == a.SourceId).Count() == 0)
                         {
-                            if (toAdd.TopicId == (int)Infraestructure.Common.Topic.Other)
+                            try
                             {
-                                var prediction = PredictTopic(toAdd.Summary);
-                                if (prediction.Accuracy < Constants.MinimumTopicAccuracy)
+                                if (toAdd.TopicId == (int)Infraestructure.Common.Topic.Other)
                                 {
-                                    var text = await _scraperService.ExtractWordsFromUrlAsync(toAdd.Url);
-                                    if (!string.IsNullOrEmpty(text))
+                                    var prediction = PredictTopic(toAdd.Summary);
+                                    if (prediction.Accuracy < TopicConstants.MinimumTopicAccuracy)
                                     {
-                                        var secondPrediction = PredictTopic(text);
-                                        if (secondPrediction.Accuracy > Constants.MinimumTopicAccuracy)
+                                        var text = await _scraperService.ExtractWordsFromUrlAsync(toAdd.Url);
+                                        if (!string.IsNullOrEmpty(text))
                                         {
-                                            toAdd.TopicId = secondPrediction.TopicId;
-                                            toAdd.Accuracy = secondPrediction.Accuracy;
+                                            var secondPrediction = PredictTopic(text);
+                                            if (secondPrediction.Accuracy > TopicConstants.MinimumTopicAccuracy)
+                                            {
+                                                toAdd.TopicId = secondPrediction.TopicId;
+                                                toAdd.Accuracy = secondPrediction.Accuracy;
+                                            }
                                         }
                                     }
-                                }
-                                else
-                                {
-                                    toAdd.TopicId = prediction.TopicId;
-                                    toAdd.Accuracy = prediction.Accuracy;
+                                    else
+                                    {
+                                        toAdd.TopicId = prediction.TopicId;
+                                        toAdd.Accuracy = prediction.Accuracy;
+                                    }
                                 }
                             }
+                            catch (Exception ex)
+                            {
+                                _logger.LogError(ex, "Error ocurred when trying to pull data from {url} ", $"url: {toAdd.Url}");
+                            }
+                            listToAdd.Add(toAdd);
                         }
-                        catch (Exception ex)
-                        {
-                            _logger.LogError(ex, "Error ocurred when trying to pull data from {url} ", $"url: {toAdd.Url}");
-                        }
-                        listToAdd.Add(toAdd);
+
                     }
                 });
                 await Task.WhenAll(tasks);

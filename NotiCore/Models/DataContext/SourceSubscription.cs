@@ -11,7 +11,7 @@ namespace NotiCore.API.Models.DataContext
         [Key]
         public int SourceSubscriptionId { get; set; }
         [Required]
-        public int SubcriberId { get; set; }
+        public int SubscriberId { get; set; }
         public Subscriber Subscriber { get; set; }
         [Required]
         public int SourceId { get; set; }
