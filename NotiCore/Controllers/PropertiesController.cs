@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NotiCore.API.Services.CoreServices;
 using System;
@@ -10,6 +11,7 @@ namespace NotiCore.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "Admin")]
     public class PropertiesController : ControllerBase
     {
         private readonly IPropertiesService _propertiesService;
