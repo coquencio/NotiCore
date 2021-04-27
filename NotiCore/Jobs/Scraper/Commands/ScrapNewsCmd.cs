@@ -1,5 +1,6 @@
 ﻿using Hangfire;
 using MediatR;
+using NotiCore.API.Jobs.Notifications;
 using NotiCore.API.Models.DataContext;
 using NotiCore.API.Services.ControllerServices;
 using Python.Runtime;
@@ -16,12 +17,15 @@ namespace NotiCore.API.Jobs.Scraper.Commands
     }
     public class ScrapNewsCmdHandler : IRequestHandler<ScrapNewsCmd, Unit>
     {
+        private readonly IMediator _mediator;
         private readonly IArticleService _articleService;
         private readonly DataContext _context;
-        public ScrapNewsCmdHandler(IArticleService articleService, DataContext context)
+        public ScrapNewsCmdHandler(IArticleService articleService, DataContext context, IMediator mediator)
         {
             _articleService = articleService;
             _context = context;
+            _mediator = mediator;
+
         }
         public async Task<Unit> Handle(ScrapNewsCmd request, CancellationToken cancellationToken)
         {
@@ -42,6 +46,7 @@ namespace NotiCore.API.Jobs.Scraper.Commands
             }
             //PythonEngine.EndAllowThreads();
 
+            await _mediator.Publish(new ScrappedArticlesNotification());
             return Unit.Value;
         }
     }

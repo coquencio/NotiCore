@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NotiCore.API.Models.DataContext;
 
 namespace NotiCore.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210425203309_PropertiesEntity")]
+    partial class PropertiesEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -873,7 +875,10 @@ namespace NotiCore.API.Migrations
                     b.Property<int>("SourceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SubscriberId")
+                    b.Property<int>("SubcriberId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SubscriberId")
                         .HasColumnType("int");
 
                     b.HasKey("SourceSubscriptionId");
@@ -1115,9 +1120,7 @@ namespace NotiCore.API.Migrations
 
                     b.HasOne("NotiCore.API.Models.DataContext.Subscriber", "Subscriber")
                         .WithMany()
-                        .HasForeignKey("SubscriberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SubscriberId");
 
                     b.Navigation("Source");
 

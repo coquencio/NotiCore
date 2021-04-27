@@ -22,6 +22,7 @@ namespace NotiCore.API.Models.DataContext
         public DbSet<Topic> Topic { get; set; }
         public DbSet<TopicSubscription> TopicSubscriptions { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Property> Properties { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             FileStream openStream = File.OpenRead("Infraestructure/Seeds/SeedSources.json");
@@ -52,7 +53,8 @@ namespace NotiCore.API.Models.DataContext
 
             modelBuilder.Entity<Language>().HasData(
             new Language { LanguageId = 1, Description = "English", Abbreviation = "EN", IsActive = true },
-            new Language { LanguageId = 2, Description = "Spanish", Abbreviation = "ES", IsActive = true }
+            new Language { LanguageId = 2, Description = "Spanish", Abbreviation = "ES", IsActive = true },
+            new Language { LanguageId = 3, Description = "French", Abbreviation = "FR", IsActive = true }
             );
 
             modelBuilder.Entity<Source>()
