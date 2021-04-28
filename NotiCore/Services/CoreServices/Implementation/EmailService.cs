@@ -20,18 +20,6 @@ namespace NotiCore.API.Services.CoreServices.Implementation
         {
             _propertiesService = propertiesService;
         }
-        //private SmtpClient GetSmtpClient()
-        //{
-        //    return new SmtpClient(_propertiesService.GetProperty(Properties.MailHost), Convert.ToInt32(_propertiesService.GetProperty(Properties.MailPort)))
-        //    {
-        //        Credentials = new NetworkCredential(
-        //            _propertiesService.GetProperty(Properties.MailerAddress),
-        //            _propertiesService.GetProperty(Properties.MailerPassword)
-        //            ),
-        //        EnableSsl = true,
-        //        UseDefaultCredentials = true,
-        //    };
-        //}
         [DisplayName("{0} News Letter")]
         [AutomaticRetry(Attempts = 1)]
         public async Task SendNewsLetterEmail(string userEmail, string firstName, ICollection<Article> articles)

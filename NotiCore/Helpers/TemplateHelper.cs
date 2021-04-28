@@ -46,6 +46,10 @@ namespace NotiCore.API.Helpers
         }
         public static string GetArticleTemplate(string title, string content, string url)
         {
+            if (content.Length > 400)
+            {
+                content = TagsHelper.BuildSummaryClosingAllTags(content);
+            }
             var template = File.ReadAllText(_templateRoute  + "ArticleTemplate.html");
             template = template.Replace("{Title}", title).Replace("{content}", content).Replace("{url}", url);
             return template;
