@@ -23,7 +23,7 @@ namespace NotiCore.API.Helpers
             foreach (var source in sources)
             {
                 template += GetSourceHeaderTemplate(source);
-                var includedArticles = articles.Where(a=> a.Source.Name.Equals(source));
+                var includedArticles = articles.Where(a => a.Source.Name.Equals(source));
                 var topics = new List<string>();
                 foreach (var article in includedArticles)
                 {
@@ -46,6 +46,12 @@ namespace NotiCore.API.Helpers
         }
         public static string GetArticleTemplate(string title, string content, string url)
         {
+            content = content ?? "";
+            content = content.FormatImages();
+            if (content.Length > 400)
+            {
+                content = content.BuildSummaryClosingAllTags();
+            }
             var template = File.ReadAllText(_templateRoute  + "ArticleTemplate.html");
             template = template.Replace("{Title}", title).Replace("{content}", content).Replace("{url}", url);
             return template;

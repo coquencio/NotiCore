@@ -79,9 +79,9 @@ namespace NotiCore
             string encryptionKey = Configuration["EncryptionKey"];
             services.AddSingleton<IEncryptionService>(s => new EncryptionService(encryptionKey));
             services.AddSingleton<IMLService>(x => new MLService(@"../NotiCoreML.Model/MLModel.zip", @"../NotiCoreTopicML.Model/MLModel.zip"));
-            services.AddSingleton<IEmailService, EmailService>();
             services.AddSingleton<IPropertiesService, PropertiesService>();
-
+            services.AddSingleton<IEmailService, EmailService>();
+            
             // Controller Services
             services.AddSingleton<ISourceService, SourceService>();
             services.AddSingleton<IPredictNewsWebsiteService, PredictNewsWebsiteService>();

@@ -36,10 +36,16 @@ namespace NotiCore.API.Jobs.Mailer.Commands
                 var subscriberArticles = pendingArticles
                     .Where(s => subscriptions.Select(sub => sub.SourceId)
                     .Contains(s.SourceId))
-                    .ToList()
-                    .ToArray();
+                    .ToList();
 
-                BackgroundJob.Enqueue(() => _emailService.SendNewsLetterEmail(subscriber.Email, subscriber.Name, subscriberArticles));
+                var cleanSubscriberArticles = new List<Article>();
+                foreach (var article in subscriberArticles)
+                {
+                    if (cleanSubscriberArticles.Count(a => a.Url.Equals(article.Url)) == 0)
+                        cleanSubscriberArticles.Add(article);
+                }
+
+                BackgroundJob.Enqueue(() => _emailService.SendNewsLetterEmail(subscriber.Email, subscriber.Name, cleanSubscriberArticles.ToArray()));
             }
             foreach (var article in pendingArticles)
             {
