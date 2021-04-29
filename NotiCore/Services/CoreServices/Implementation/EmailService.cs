@@ -1,25 +1,41 @@
 ﻿using Hangfire;
 using MailKit.Net.Smtp;
+using Microsoft.Extensions.Configuration;
 using MimeKit;
 using NotiCore.API.Helpers;
+using NotiCore.API.Infraestructure.Common;
 using NotiCore.API.Models.DataContext;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Properties = NotiCore.API.Infraestructure.Common.PropertyConstants;
 
 namespace NotiCore.API.Services.CoreServices.Implementation
 {
     public class EmailService : IEmailService
     {
-        private readonly IPropertiesService _propertiesService;
-
-        public EmailService(IPropertiesService propertiesService)
+        private readonly string _host;
+        private readonly string _address;
+        private readonly string _password;
+        private readonly int _port;
+        public EmailService(IConfiguration configuration, IEncryptionService encryptionService = null)
         {
-            _propertiesService = propertiesService;
+            _host = encryptionService
+                .Decrypt(configuration
+                .GetSection("MailerValues")
+                .GetSection(PropertyConstants.MailHost).Value);
+            
+            _port = Convert.ToInt32(encryptionService
+                .Decrypt(configuration
+                .GetSection("MailerValues")
+                .GetSection(PropertyConstants.MailPort).Value));
+
+            _address = encryptionService.Decrypt(configuration[PropertyConstants.MailerAddress]);
+
+            _password = encryptionService.Decrypt(configuration[PropertyConstants.MailerPassword]);
         }
+        
         [DisplayName("{0} News Letter")]
         [AutomaticRetry(Attempts = 1)]
         public async Task SendNewsLetterEmail(string userEmail, string firstName, ICollection<Article> articles)
@@ -30,7 +46,7 @@ namespace NotiCore.API.Services.CoreServices.Implementation
             
             var message = new MimeMessage();
             message.To.Add(MailboxAddress.Parse(userEmail));
-            message.From.Add(MailboxAddress.Parse(_propertiesService.GetProperty(Properties.MailerAddress)));
+            message.From.Add(MailboxAddress.Parse(_address));
             message.Subject = "Your Noticore briefing";
             message.Body = bodyBuilder.ToMessageBody();
 
@@ -40,13 +56,11 @@ namespace NotiCore.API.Services.CoreServices.Implementation
                     (sender, certificate, certChainType, errors) => true;
 
                 await client.ConnectAsync(
-                        _propertiesService.GetProperty(Properties.MailHost),
-                        Convert.ToInt32(_propertiesService.GetProperty(Properties.MailPort)),
+                        _host,
+                        _port,
                         true);
 
-                await client.AuthenticateAsync(
-                    _propertiesService.GetProperty(Properties.MailerAddress),
-                    _propertiesService.GetProperty(Properties.MailerPassword));
+                await client.AuthenticateAsync(_address, _password);
 
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);

@@ -7,7 +7,16 @@ namespace NotiCore.API.Helpers
 {
     public static class TagsHelper
     {
-        public static string BuildSummaryClosingAllTags(string html)
+        public static string FormatImages(this string html)
+        {
+            var style = "<img style=\"width: 100% !important; border-radius: 16px; margin-right: auto !important; margin-left: auto !important; display:block !important; height: auto!important;\"";
+            if (html.Contains("<img"))
+            {
+               html = html.Replace("<img", style);
+            }
+            return html;
+        }
+        public static string BuildSummaryClosingAllTags(this string html)
         {
             var currentSubstring = html.Substring(0, 350);
             if (html.Contains("<"))
@@ -36,7 +45,20 @@ namespace NotiCore.API.Helpers
                 }
 
             }
-            return currentSubstring + "...";
+            if (string.IsNullOrEmpty(AvoidCustomTagRules(currentSubstring)))
+                return "";
+
+            return AvoidCustomTagRules(currentSubstring) + "...";
+        }
+
+        private static string AvoidCustomTagRules(string html)
+        {
+            var custom = "<div class=\"feedflare\">";
+            if (html.Contains(custom))
+            {
+                html = html.Substring(0, html.IndexOf(custom));
+            }
+            return html;
         }
     }
 }
