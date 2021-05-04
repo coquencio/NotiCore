@@ -89,6 +89,7 @@ namespace NotiCore
             services.AddSingleton<ITokenService, TokenService>();
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IArticleService, ArticleService>();
+            services.AddSingleton<IUrlService, UrlService>();
 
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration

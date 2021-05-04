@@ -9,5 +9,6 @@ namespace NotiCore.API.Services.CoreServices
     public interface IEmailService
     {
         Task SendNewsLetterEmail(string userEmail, string firstName, ICollection<Article> articles);
+        Task SendEnrollmentMailAsync(string email, string name, string url);
     }
 }

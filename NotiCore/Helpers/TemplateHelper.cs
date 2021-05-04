@@ -10,6 +10,15 @@ namespace NotiCore.API.Helpers
     public static class TemplateHelper
     {
         private static string _templateRoute = @"../Noticore/Infraestructure/EmailTemplates/NewsLetter/";
+        public static string GetEmailEnrollmentTemplate(string name, string link)
+        {
+            var route = @"../Noticore/Infraestructure/EmailTemplates/EnrollTemplate/EnrollConfirmationTemplate.html";
+            var template = File.ReadAllText(route);
+            template = template.Replace("{year}", DateTime.Now.Year.ToString());
+            template = template.Replace("{firstName}", name);
+            template = template.Replace("{link}", link);
+            return template;
+        }
         public static string GetNewsLetterTemplate(string userNmae, ICollection<Article> articles)
         {
             var template = "";

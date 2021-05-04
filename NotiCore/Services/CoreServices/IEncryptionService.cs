@@ -10,5 +10,7 @@ namespace NotiCore.API.Services.CoreServices
         string Encrypt(string encryptString);
         string Decrypt(string cipherText);
         string GetKey();
+        string BuildKeys(List<(string key, string value)> keys);
+        List<(string key, string value)> GetKeys(string encrypted);
     }
 }
