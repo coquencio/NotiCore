@@ -14,26 +14,29 @@ namespace NotiCore.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WorkflowController : ControllerBase
+    public class WorkflowController : Controller
     {
         private readonly ISubscriberService _subscriberService;
-        public WorkflowController(ISubscriberService subscriberService)
+        private readonly IViewModelService _viewModelService;
+        public WorkflowController(ISubscriberService subscriberService, IViewModelService viewModelService)
         {
             _subscriberService = subscriberService;
+            _viewModelService = viewModelService;
         }
         [HttpPost]
         [Route("Enroll")]
         [AllowAnonymous]
         public async Task EnrollSubscriber(AddSubscriberRequest request)
         {
-            var action = Url.GenerateAbsoluteUrl("api", new string[] { "Workflow", "SetupSources" });
+            var action = Url.GenerateAbsoluteUrl("api", new string[] { "Workflow", "SetupSources"});
             await _subscriberService.EnrollAsync(request, action);
         }
         [HttpGet]
         [Route("SetupSources")]
-        public void SetupSubscriber([FromQuery] string values = null)
+        public IActionResult SetupSubscriber([FromQuery] string values = null)
         {
-            throw new NotImplementedException();
+            var vm = _viewModelService.GetUserSourceSetupModel(values);
+            return View(vm);
         }
 
     }

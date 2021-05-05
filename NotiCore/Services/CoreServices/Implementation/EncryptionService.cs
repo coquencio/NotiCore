@@ -89,7 +89,14 @@ namespace NotiCore.API.Services.CoreServices.Implementation
             foreach (var key in keys)
             {
                 var substracted = key.Split(" ");
-                list.Add((substracted[0], substracted[1]));
+                if (substracted.Length > 2)
+                {
+                    list.Add((substracted[0], substracted[1] +" "+ substracted[2]));
+                }
+                else
+                {
+                    list.Add((substracted[0], substracted[1]));
+                }
             }
             return list;
         }

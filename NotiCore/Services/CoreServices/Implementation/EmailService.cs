@@ -75,7 +75,7 @@ namespace NotiCore.API.Services.CoreServices.Implementation
             var message = new MimeMessage();
             message.To.Add(MailboxAddress.Parse(email));
             message.From.Add(MailboxAddress.Parse(_address));
-            message.Subject = "Thanks for subscribing...";
+            message.Subject = "Welcome to noticore";
             message.Body = bodyBuilder.ToMessageBody();
 
             using (var client = new SmtpClient())

@@ -18,8 +18,9 @@ namespace NotiCore.API.Services.ControllerServices.Implementation
         public string BuildUrl(string route, DateTime Expiration, string parameterName, string parameterValue)
         {
             var keys = new List<(string key, string value)>();
-            keys.Add(("Expiration", Expiration.ToString()));
-            keys.Add((parameterName, parameterName));
+            var formattedDate = Expiration.ToString("MM/dd/yyyy H:mm");
+            keys.Add(("Expiration", formattedDate));
+            keys.Add((parameterName, parameterValue));
             return route + "?values=" + _encryptionService.BuildKeys(keys);
         }
     }

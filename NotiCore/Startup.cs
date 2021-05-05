@@ -66,6 +66,7 @@ namespace NotiCore
             services.AddSingleton(mapper);
             services.AddControllers()
                 .AddNewtonsoftJson();
+            services.AddControllersWithViews();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NotiCore", Version = "v1" });
@@ -90,6 +91,7 @@ namespace NotiCore
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IArticleService, ArticleService>();
             services.AddSingleton<IUrlService, UrlService>();
+            services.AddSingleton<IViewModelService, ViewModelService>();
 
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration
