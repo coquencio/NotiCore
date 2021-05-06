@@ -25,7 +25,7 @@ namespace NotiCore.API.Controllers
         }
         [HttpPost]
         [Route("Enroll")]
-        [AllowAnonymous]
+        [Authorize(Policy = "Admin")]
         public async Task EnrollSubscriber(AddSubscriberRequest request)
         {
             var action = Url.GenerateAbsoluteUrl("api", new string[] { "Workflow", "SetupSources"});
@@ -33,6 +33,7 @@ namespace NotiCore.API.Controllers
         }
         [HttpGet]
         [Route("SetupSources")]
+        [AllowAnonymous]
         public IActionResult SetupSubscriber([FromQuery] string values = null)
         {
             var vm = _viewModelService.GetUserSourceSetupModel(values);

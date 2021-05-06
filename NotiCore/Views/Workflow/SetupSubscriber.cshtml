@@ -1,5 +1,6 @@
 ﻿@model NotiCore.API.Models.ViewModel.SourceSetupViewModel
 <head>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
     <style>
         .header-logo {
@@ -65,6 +66,10 @@
             bottom: 0;
         }
 
+        input[type="checkbox"] {
+            margin: 10px;
+        }
+
         #checkboxes {
             display: none;
             border: 1px #dadada solid;
@@ -78,10 +83,6 @@
                     background-color: #1e90ff;
                 }
     </style>
-    <script type="text/javascript">
-        var originalOptions = [];
-
-    </script>
 </head>
 @if (Model.Expired)
 {
@@ -103,12 +104,11 @@ else
 {
     @foreach (var item in Model.Sources)
     {
-        <script type="text/javascript">
-            originalOptions.push(
-                { value: "@item.sourceId", label: "@item.displayName", selected: "True" == "@item.selected"}
-            );
-        </script>
+        <div style="display:none" id="source-@item.sourceId"> @item.displayName</div>
     }
+    <script type="text/javascript" charset="utf-8">
+        var originalOptions = [];
+    </script>
     <script type="text/javascript">
         var expanded = false;
         var options = originalOptions;
@@ -187,6 +187,14 @@ else
         }
         // self executing function here
         docReady(function () {
+            var html = '';
+            @foreach (var item in Model.Sources)
+            {
+                <text>
+            html = document.getElementById("source-@item.sourceId").innerHTML;
+            originalOptions.push({ value: '@item.sourceId', label: html, selected: 'True' == '@item.selected' });
+                </text>
+            }
             // DOM is loaded and ready for manipulation here
             populateList();
         });
