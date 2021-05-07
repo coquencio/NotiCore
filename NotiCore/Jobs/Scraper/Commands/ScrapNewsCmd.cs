@@ -35,6 +35,11 @@ namespace NotiCore.API.Jobs.Scraper.Commands
             //    await _articleService.SaveArticlesFromSourceAsync(source);
             //});
             //await Task.WhenAll(task);
+            var toDelete = _context.Articles.Where(a => a.Sent).ToList();
+            
+            _context.RemoveRange(toDelete);
+            _context.SaveChanges();
+
             var sources = _context.Sources
                 .Where(s=> s.IsActive && s.LastScrapedDate < DateTime.Today)
                 .ToList();

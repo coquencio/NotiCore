@@ -87,6 +87,12 @@ namespace NotiCore.API.Services.ControllerServices.Implementation
                 _context.Sources.Update(source);
                 _context.SaveChanges();
             }
+            else
+            {
+                source.IsActive = false;
+                _context.Update(source);
+                _context.SaveChanges();
+            }
         }
         private int TryGetTopicFromUrl(string baseUrl, string fullUrl)
         {

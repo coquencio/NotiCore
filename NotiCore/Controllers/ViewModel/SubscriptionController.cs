@@ -18,7 +18,14 @@ namespace NotiCore.API.Controllers.API
         {
             _viewModelService = viewModelService;
         }
-
+        [HttpGet]
+        [Route("SetupSources")]
+        [AllowAnonymous]
+        public IActionResult SetupSubscriber([FromQuery] string values = null)
+        {
+            var vm = _viewModelService.GetUserSourceSetupModel(values);
+            return View(vm);
+        }
         [HttpPost]
         public IActionResult SaveSources([FromForm] IFormCollection values = null)
         {

@@ -27,7 +27,8 @@ namespace NotiCore.API.Jobs.Mailer.Commands
         {
             var pendingArticles = _context.Articles.Where(a => !a.Sent)
                 .Include(a => a.Source)
-                .Include(a => a.Topic);
+                .Include(a => a.Topic)
+                .ToList();
 
             var subscribers = _context.Subscribers.Where(s => s.IsActive && s.HasAuthorized).ToList();
             foreach (var subscriber in subscribers)
@@ -44,8 +45,10 @@ namespace NotiCore.API.Jobs.Mailer.Commands
                     if (cleanSubscriberArticles.Count(a => a.Url.Equals(article.Url)) == 0)
                         cleanSubscriberArticles.Add(article);
                 }
-
-                BackgroundJob.Enqueue(() => _emailService.SendNewsLetterEmail(subscriber.Email, subscriber.Name, cleanSubscriberArticles.ToArray()));
+                if (cleanSubscriberArticles.Any())
+                {
+                    BackgroundJob.Enqueue(() => _emailService.SendNewsLetterEmail(subscriber.Email, subscriber.Name, cleanSubscriberArticles.ToArray()));
+                }
             }
             foreach (var article in pendingArticles)
             {

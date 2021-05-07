@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NotiCore.API.Infraestructure.Extensions;
+using NotiCore.API.Infraestructure.Response;
 using NotiCore.API.Models.Requests;
 using NotiCore.API.Services.ControllerServices;
 using System;
@@ -17,27 +20,35 @@ namespace NotiCore.API.Controllers
     public class WorkflowController : Controller
     {
         private readonly ISubscriberService _subscriberService;
-        private readonly IViewModelService _viewModelService;
-        public WorkflowController(ISubscriberService subscriberService, IViewModelService viewModelService)
+        private readonly ILogger<WorkflowController> _logger;
+        public WorkflowController(ISubscriberService subscriberService, ILogger<WorkflowController> logger)
         {
+            _logger = logger;
             _subscriberService = subscriberService;
-            _viewModelService = viewModelService;
         }
         [HttpPost]
         [Route("Enroll")]
         [Authorize(Policy = "Admin")]
-        public async Task EnrollSubscriber(AddSubscriberRequest request)
+        public async Task<BaseResponse<string>> EnrollSubscriber(AddSubscriberRequest request)
         {
-            var action = Url.GenerateAbsoluteUrl("api", new string[] { "Workflow", "SetupSources"});
-            await _subscriberService.EnrollAsync(request, action);
-        }
-        [HttpGet]
-        [Route("SetupSources")]
-        [AllowAnonymous]
-        public IActionResult SetupSubscriber([FromQuery] string values = null)
-        {
-            var vm = _viewModelService.GetUserSourceSetupModel(values);
-            return View(vm);
+            try
+            {
+                var action = Url.GenerateAbsoluteUrl("Subscription", new string[] { "SetupSources" });
+                await _subscriberService.EnrollAsync(request, action);
+                return new BaseResponse<string>(null, "New email enrolled")
+                .Created();
+            }
+            catch (ValidationException ex)
+            {
+                return new BaseResponse<string>(null, ex.Message)
+                    .BadRequest(ex.Errors.Select(e => e.ErrorMessage));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error ocurred while trying to Enroll subscriber", $"subscriber: {request}");
+                return new BaseResponse<string>(null, "Unknown Error")
+                    .InternalError();
+            }
         }
 
     }

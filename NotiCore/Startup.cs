@@ -71,7 +71,7 @@ namespace NotiCore
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NotiCore", Version = "v1" });
             });
-            services.AddDbContext<DataContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DBContection")), ServiceLifetime.Singleton);
+            services.AddDbContext<DataContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DBContection")), ServiceLifetime.Transient);
             
             // Core services
             services.AddHttpClient<IScraperService, ScraperService>();
@@ -80,18 +80,18 @@ namespace NotiCore
             string encryptionKey = Configuration["EncryptionKey"];
             services.AddSingleton<IEncryptionService>(s => new EncryptionService(encryptionKey));
             services.AddSingleton<IMLService>(x => new MLService(@"../NotiCoreML.Model/MLModel.zip", @"../NotiCoreTopicML.Model/MLModel.zip"));
-            services.AddSingleton<IPropertiesService, PropertiesService>();
+            services.AddScoped<IPropertiesService, PropertiesService>();
             services.AddSingleton<IEmailService, EmailService>();
             
             // Controller Services
-            services.AddSingleton<ISourceService, SourceService>();
+            services.AddScoped<ISourceService, SourceService>();
             services.AddSingleton<IPredictNewsWebsiteService, PredictNewsWebsiteService>();
-            services.AddSingleton<ISubscriberService, SubscriberService>();
-            services.AddSingleton<ITokenService, TokenService>();
-            services.AddSingleton<IUserService, UserService>();
-            services.AddSingleton<IArticleService, ArticleService>();
-            services.AddSingleton<IUrlService, UrlService>();
-            services.AddSingleton<IViewModelService, ViewModelService>();
+            services.AddScoped<ISubscriberService, SubscriberService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IUrlService, UrlService>();
+            services.AddScoped<IViewModelService, ViewModelService>();
 
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration

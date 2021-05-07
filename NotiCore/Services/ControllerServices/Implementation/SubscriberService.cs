@@ -34,7 +34,7 @@ namespace NotiCore.API.Services.ControllerServices.Implementation
                 var subscriber = new Subscriber
                 {
                     Email = request.Email,
-                    IsActive = true,
+                    IsActive = false,
                     HasAuthorized = false, 
                     Name = request.Email,
                     LastName = request.LastName

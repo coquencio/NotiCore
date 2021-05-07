@@ -9,7 +9,7 @@ namespace NotiCore.API.Helpers
     {
         public static string FormatImages(this string html)
         {
-            var style = "<img style=\"width: 100% !important; border-radius: 16px; margin-right: auto !important; margin-left: auto !important; display:block !important; height: auto!important;\"";
+            var style = "<img style=\"max-width: 100% !important; border-radius: 16px; margin-right: auto !important; margin-left: auto !important; display:block !important; height: auto!important;\"";
             if (html.Contains("<img"))
             {
                html = html.Replace("<img", style);

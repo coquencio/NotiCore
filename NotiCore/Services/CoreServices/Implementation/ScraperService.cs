@@ -59,7 +59,9 @@ namespace NotiCore.API.Services.CoreServices.Implementation
                     "newscatcher",
                     "json"
                 };
-                var code = $"json_result = json.dumps(newscatcher.Newscatcher(website = '{url}').get_news()['articles'])";
+                var code = $"nc = newscatcher.Newscatcher(website = '{url}').get_news()\n";
+                code += $"if nc is not None:\n";
+                code += $"  json_result = json.dumps(nc['articles'])";
                 var pythonDict = _pythonService.ExecutePythonCode(libraries, code, new string[] { "json_result" });
                 string json = null;
                 if(pythonDict.TryGetValue("json_result", out json))

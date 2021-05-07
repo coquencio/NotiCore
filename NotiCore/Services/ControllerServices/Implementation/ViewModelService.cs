@@ -29,6 +29,7 @@ namespace NotiCore.API.Services.ControllerServices.Implementation
                 var email = _encryptionService.Decrypt(user);
                 var subscriber = _context.Subscribers.Where(s => s.Email.Equals(email)).FirstOrDefault();
                 subscriber.HasAuthorized = true;
+                subscriber.IsActive = true;
                 _context.Update(subscriber);
 
                 var sources = _context.Sources.Where(s => s.IsActive).ToList().Select(s => s.SourceId);
