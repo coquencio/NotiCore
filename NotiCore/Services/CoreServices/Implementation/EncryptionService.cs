@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -66,6 +67,38 @@ namespace NotiCore.API.Services.CoreServices.Implementation
         public string GetKey()
         {
             return _encryptionKey;
+        }
+
+        public string BuildKeys(List<(string key, string value)> keys)
+        {
+            var encrypted = new StringBuilder();
+            foreach (var key in keys)
+            {
+                encrypted.Append(key.key + " "); 
+                encrypted.Append(key.value + ",");
+            }
+            var toEncrypt = encrypted.ToString();
+            toEncrypt = toEncrypt.Substring(0, toEncrypt.Length - 1);
+            return Encrypt(toEncrypt);
+        }
+        public List<(string key, string value)> GetKeys(string encrypted)
+        {
+            var list = new List<(string key, string value)>();
+            var decrypted = Decrypt(encrypted);
+            var keys = decrypted.Split(",");
+            foreach (var key in keys)
+            {
+                var substracted = key.Split(" ");
+                if (substracted.Length > 2)
+                {
+                    list.Add((substracted[0], substracted[1] +" "+ substracted[2]));
+                }
+                else
+                {
+                    list.Add((substracted[0], substracted[1]));
+                }
+            }
+            return list;
         }
     }
 }

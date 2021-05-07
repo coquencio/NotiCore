@@ -54,5 +54,9 @@ namespace NotiCore.API.Infraestructure.Response
             return this;
         }
 
+        internal BaseResponse<string> BadRequest(object p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

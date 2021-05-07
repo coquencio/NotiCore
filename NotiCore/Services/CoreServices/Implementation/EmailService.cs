@@ -35,7 +35,6 @@ namespace NotiCore.API.Services.CoreServices.Implementation
 
             _password = encryptionService.Decrypt(configuration[PropertyConstants.MailerPassword]);
         }
-        
         [DisplayName("{0} News Letter")]
         [AutomaticRetry(Attempts = 1)]
         public async Task SendNewsLetterEmail(string userEmail, string firstName, ICollection<Article> articles)
@@ -53,6 +52,35 @@ namespace NotiCore.API.Services.CoreServices.Implementation
             using (var client = new SmtpClient())
             {
                 client.ServerCertificateValidationCallback = 
+                    (sender, certificate, certChainType, errors) => true;
+
+                await client.ConnectAsync(
+                        _host,
+                        _port,
+                        true);
+
+                await client.AuthenticateAsync(_address, _password);
+
+                await client.SendAsync(message);
+                await client.DisconnectAsync(true);
+            }
+        }
+
+        public async Task SendEnrollmentMailAsync(string email, string name, string url)
+        {
+            var template = TemplateHelper.GetEmailEnrollmentTemplate(name, url);
+            var bodyBuilder = new BodyBuilder();
+            bodyBuilder.HtmlBody = template;
+
+            var message = new MimeMessage();
+            message.To.Add(MailboxAddress.Parse(email));
+            message.From.Add(MailboxAddress.Parse(_address));
+            message.Subject = "Welcome to noticore";
+            message.Body = bodyBuilder.ToMessageBody();
+
+            using (var client = new SmtpClient())
+            {
+                client.ServerCertificateValidationCallback =
                     (sender, certificate, certChainType, errors) => true;
 
                 await client.ConnectAsync(
