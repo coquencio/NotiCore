@@ -1,0 +1,15 @@
+.navbar{
+    background-color: black;
+    color:#7c4b96;
+    min-height: 80px;
+}
+.navbar a{
+    color: white;
+}
+.navbar a:hover {
+    font-weight: bold;
+  }
+.navbar-item img{
+    max-height: 80px;
+    width: auto;
+}

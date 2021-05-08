@@ -1,0 +1,16 @@
+.main-header{
+    width: 100%;
+    height: auto;
+    display: block;
+    padding: 20px;
+    background-color: #7c4b96;
+    color: white;
+}
+.half{
+    margin: auto;
+    max-width: 400px;
+}
+.half h1{
+    font-size: xx-large;
+    font-weight: bold;
+}
