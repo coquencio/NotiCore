@@ -173,9 +173,12 @@ namespace NotiCore
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(a => a.WithOrigins(Configuration["ClientAppRoute"])
+            .WithMethods("POST", "GET")
+            .AllowAnyHeader());
+            
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

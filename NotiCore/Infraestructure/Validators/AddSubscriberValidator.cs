@@ -12,14 +12,16 @@ namespace NotiCore.API.Infraestructure.Validators
         public AddSubscriberValidator()
         {
             RuleFor(s => s).NotNull();
-            RuleFor(s => s.FirstName).NotNull();
+            RuleFor(s => s.FirstName).Must(e=> !string.IsNullOrEmpty(e))
+                .WithMessage("First Name is required");
 
             RuleFor(s => s.LastName)
                 .Must(n =>n.Length >= 2)
-                .When(e => !string.IsNullOrEmpty(e.LastName));
+                .When(e => !string.IsNullOrEmpty(e.LastName))
+                .WithMessage("Last name must have at least 2 characters");
 
-            RuleFor(s => s.Email).NotNull();
-            RuleFor(s => s.Email).EmailAddress();
+            RuleFor(s => s.Email).Must(e => !string.IsNullOrEmpty(e)).WithMessage("Email is required");
+            RuleFor(s => s.Email).EmailAddress().WithMessage("Invalid Email format");
         }
     }
 }

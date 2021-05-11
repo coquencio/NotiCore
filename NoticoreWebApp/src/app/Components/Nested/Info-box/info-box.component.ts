@@ -9,7 +9,9 @@ export class InfoBoxComponent implements OnInit {
 
   constructor() { }
   @Input () Title : string;
-  @Input () Text : string;
+  @Input () Text : string;  
+  @Input () IconClass : string = '';
+
 
   ngOnInit(): void {
   }

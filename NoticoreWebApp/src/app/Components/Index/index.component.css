@@ -14,3 +14,40 @@
     font-size: xx-large;
     font-weight: bold;
 }
+.form-container{
+    padding: 30px;
+    margin: auto;
+    margin-top: 15px;
+    max-width: 600px;
+}
+.form-container label{
+    color: #7c4b96;
+}
+.form-container input{
+    border-color: #7C4B96;
+}
+.form-container h1{
+    color: black;
+    font-size: xx-large;
+    font-weight: bold;
+}
+.title{
+    background-color: #7c4b96;
+    padding: 40px;
+    text-align: center;
+}
+.title h1{
+    color: white;
+    font-size: xx-large;
+    font-weight: bold;
+}
+.is-primary{
+    background-color: #7c4b96 !important;
+}
+.notification{
+    text-align: center;
+}
+
+.info-section{
+    padding: 40px;
+}

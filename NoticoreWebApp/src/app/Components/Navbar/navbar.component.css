@@ -13,3 +13,6 @@
     max-height: 80px;
     width: auto;
 }
+.active-route{
+    font-weight: bold;
+}
