@@ -16,3 +16,13 @@
 .active-route{
     font-weight: bold;
 }
+
+.is-active{
+    background-color: black;
+}
+div.is-active{
+    margin-right: 20px;
+}
+.navbar-burger{
+    margin-right: 10px;
+}

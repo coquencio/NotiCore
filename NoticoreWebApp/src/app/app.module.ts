@@ -14,7 +14,7 @@ import { LoadingComponent } from './Components/loading/loading.component';
 import { SourcesComponent } from './Components/Sources/sources.component';
 import { DonateComponent } from './Components/Donate/donate.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import { WalletComponent } from './Components/Wallet/wallet.component';
+import { WalletComponent } from './Components/Nested/Wallet/wallet.component';
 import { ClipboardModule } from 'ngx-clipboard';
 
 @NgModule({

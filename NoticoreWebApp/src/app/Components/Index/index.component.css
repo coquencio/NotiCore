@@ -1,6 +1,6 @@
 .main-header{
-    width: 100%;
     height: auto;
+    width: 100%;
     display: block;
     padding: 20px;
     background-color: #7c4b96;
@@ -51,3 +51,13 @@
 .info-section{
     padding: 40px;
 }
+.phone-container{
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    display: block;
+    border: 8px;
+    border-style: solid;
+    border-color: #131313;
+ }

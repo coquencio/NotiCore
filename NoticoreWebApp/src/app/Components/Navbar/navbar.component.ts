@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
+  toggled: boolean = false;
   constructor() { }
   imagePath : string = 'assets/img/blackIcon.png';
   ngOnInit(): void {
   }
-
+  displayNavbar(){
+    this.toggled = !this.toggled;
+  }
 }
