@@ -10,7 +10,7 @@ import { InfoBoxComponent } from './Components/Nested/info-box/info-box.componen
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { LoadingComponent } from './Components/loading/loading.component';
+import { LoadingComponent } from './Components/Nested/Loading/loading.component' 
 import { SourcesComponent } from './Components/Sources/sources.component';
 import { DonateComponent } from './Components/Donate/donate.component';
 import { QRCodeModule } from 'angularx-qrcode';
