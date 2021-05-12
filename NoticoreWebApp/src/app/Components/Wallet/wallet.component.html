@@ -1,0 +1,12 @@
+   <div class="container wallet-container">
+        <h1>{{coin}} <i *ngIf="coin === 'Bitcoin'" class="fa fa-btc" aria-hidden="true"></i></h1>
+        <qrcode [qrdata]="address" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>  
+        <div style="background-color: #7C4B96; color: white; padding: 5px; border-radius: 16px;">
+            {{address}}
+            <br>
+            <button (click)="copy()" class="button tooltip">
+                <i class="fa fa-clipboard" aria-hidden="true">
+                    <p class="tooltiptext">Copy to clipboard</p>
+                </i>
+            </button>
+        </div>  

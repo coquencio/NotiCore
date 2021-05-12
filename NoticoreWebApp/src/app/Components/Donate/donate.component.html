@@ -3,37 +3,25 @@
         <div class="container donation-legend">
             <h1>Help us to continue</h1>
             <br>
-            By donating You help me to build this API.
+            By donating you help me to continue building an API to share this service features.
         </div>
     </div>
 </div>
-<div class="columns">
-    <div class="column" style="max-width:500px; margin:auto;">
-        <div class="container wallet-container">
-            <h1>Bitcoin  <i class="fa fa-btc" aria-hidden="true"></i></h1>
-            <qrcode [qrdata]="'Your data string'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>  
-            <div style="background-color: #7C4B96; color: white; padding: 5px; border-radius: 16px;">
-                0x882D6CB8EBbb5794892120F76B9F28d2ewsAcB2C9
-                <button class="button tooltip">
-                    <i class="fa fa-clipboard" aria-hidden="true">
-                        <span class="tooltiptext">Copy to clipboard</span>
-                    </i>
-                </button>
-            </div>    
-        </div>
+<div *ngIf="errorMessage !== ''" class="columns">
+    <div class="notification is-danger is-light">
+        {{errorMessage}}
+      </div>
+</div>
+<div *ngIf="!loading && errorMessage === ''" class="columns">
+    <div class="column wallet-banner">
+    <app-wallet coin="Bitcoin" [address] ="wallets.bitcoin"></app-wallet>
     </div>
-    <div class="column" style="max-width:500px; margin:auto;">
-        <div class="container wallet-container">
-            <h1>Ethereum</h1>
-            <qrcode [qrdata]="'Your data string'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>  
-            <div style="background-color: #7C4B96; color: white; padding: 5px; border-radius: 16px;">
-                0x882D6CB8EBbb5794892120F76ji328d2F6AcB2C9
-                <button class="button tooltip">
-                    <i class="fa fa-clipboard" aria-hidden="true">
-                        <span class="tooltiptext">Copy to clipboard</span>
-                    </i>
-                </button>
-            </div>  
-        </div>
+    <div class="column wallet-banner">
+    <app-wallet coin="Ethereum" [address] ="wallets.ethereum"></app-wallet>
+</div>
+</div>
+<div *ngIf="loading" class="colums">
+    <div class="column">
+        <app-loading></app-loading>
     </div>
 </div>

@@ -14,6 +14,8 @@ import { LoadingComponent } from './Components/loading/loading.component';
 import { SourcesComponent } from './Components/Sources/sources.component';
 import { DonateComponent } from './Components/Donate/donate.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { WalletComponent } from './Components/Wallet/wallet.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     InfoBoxComponent,
     LoadingComponent,
     SourcesComponent,
-    DonateComponent
+    DonateComponent,
+    WalletComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    QRCodeModule
+    QRCodeModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

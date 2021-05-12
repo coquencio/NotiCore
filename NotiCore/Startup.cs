@@ -92,6 +92,7 @@ namespace NotiCore
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IUrlService, UrlService>();
             services.AddScoped<IViewModelService, ViewModelService>();
+            services.AddScoped<IWalletService, WalletService>();
 
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration
@@ -163,7 +164,10 @@ namespace NotiCore
                 .GetSection("MailerValues")
                 .GetSection(PropertyConstants.MailPort).Value);
 
-            // Get from json file
+            propertiesService.SaveProperty("Bitcoin", Configuration.GetSection("WalletAddresses")["Bitcoin"]);
+            
+            propertiesService.SaveProperty("Ethereum", Configuration.GetSection("WalletAddresses")["Ethereum"]);
+
             loggerFactory.AddSerilog();
             app.UseHangfireDashboard();
             //backgroundJobs.Enqueue<MediatorWrapper> (c => c.Send("Daily news scrap job", new ScrapNewsCmd()));
