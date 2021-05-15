@@ -72,6 +72,12 @@ namespace NotiCore.API.Services.ControllerServices.Implementation
                 _context.SaveChanges();
             }
         }
+        public void DeactivateSubscriber(string userName)
+        {
+            var email = _encryptionService.Decrypt(userName);
+            _subscriberService.Deactivate(email);
+
+        }
         public SourceSetupViewModel GetUserSourceSetupModel(string values)
         {
             var vm = new SourceSetupViewModel();

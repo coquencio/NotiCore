@@ -11,5 +11,6 @@ namespace NotiCore.API.Services.ControllerServices
         Task EnrollAsync(AddSubscriberRequest request, string action);
         bool IsRegistered(string email);
         bool IsActive(string email);
+        public void Deactivate(string email);
     }
 }

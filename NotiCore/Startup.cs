@@ -34,6 +34,7 @@ using NotiCore.API.Infraestructure.Extensions;
 using NotiCore.API.Infraestructure.Common;
 using NotiCore.API.Jobs.Notifications;
 using NotiCore.API.Jobs.Mailer.Commands;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 
 namespace NotiCore
 {
@@ -148,6 +149,7 @@ namespace NotiCore
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NotiCore v1"));
             }
+            propertiesService.SaveProperty("BaseAddress", Configuration["BaseAddress"]);
 
             propertiesService
                 .SaveRawProperty(PropertyConstants.MailHost, Configuration

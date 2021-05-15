@@ -19,6 +19,7 @@ namespace NotiCore.API.Services.CoreServices.Implementation
         private readonly string _address;
         private readonly string _password;
         private readonly int _port;
+        private readonly IEncryptionService _encryptionService;
         public EmailService(IConfiguration configuration, IEncryptionService encryptionService = null)
         {
             _host = encryptionService
@@ -34,12 +35,16 @@ namespace NotiCore.API.Services.CoreServices.Implementation
             _address = encryptionService.Decrypt(configuration[PropertyConstants.MailerAddress]);
 
             _password = encryptionService.Decrypt(configuration[PropertyConstants.MailerPassword]);
+            
+            _encryptionService = encryptionService;
         }
         [DisplayName("{0} News Letter")]
         [AutomaticRetry(Attempts = 1)]
-        public async Task SendNewsLetterEmail(string userEmail, string firstName, ICollection<Article> articles)
+        public async Task SendNewsLetterEmail(string userEmail, string firstName, ICollection<Article> articles, string baseAddress)
         {
-            var template = TemplateHelper.GetNewsLetterTemplate(firstName, articles);
+            var encryptedMail = _encryptionService.Encrypt(userEmail);
+            var url = $"{baseAddress}/Subscription/Deactivate?values={encryptedMail}";
+            var template = TemplateHelper.GetNewsLetterTemplate(firstName, articles, url);
             var bodyBuilder = new BodyBuilder();
             bodyBuilder.HtmlBody = template;
             

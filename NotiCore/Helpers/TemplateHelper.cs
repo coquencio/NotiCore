@@ -19,7 +19,7 @@ namespace NotiCore.API.Helpers
             template = template.Replace("{link}", link);
             return template;
         }
-        public static string GetNewsLetterTemplate(string userNmae, ICollection<Article> articles)
+        public static string GetNewsLetterTemplate(string userNmae, ICollection<Article> articles, string deactivateUrl)
         {
             var template = "";
             var sources = new List<string>();
@@ -28,7 +28,7 @@ namespace NotiCore.API.Helpers
                 if (!sources.Contains(source.Name))
                     sources.Add(source.Name);
             }
-            template += GetMainHeader(userNmae, articles.Count().ToString(), sources.Count.ToString());
+            template += GetMainHeader(userNmae, articles.Count().ToString(), sources.Count.ToString(), deactivateUrl);
             foreach (var source in sources)
             {
                 template += GetSourceHeaderTemplate(source);
@@ -83,10 +83,14 @@ namespace NotiCore.API.Helpers
             template = template.Replace("{Category}", category);
             return template;
         }
-        public static string GetMainHeader(string firstName, string totalArticles, string totalSource)
+        public static string GetMainHeader(string firstName, string totalArticles, string totalSource, string deactivateUrl)
         {
             var template = File.ReadAllText(_templateRoute + "HeaderTemplate.html");
-            template = template.Replace("{firstName}", firstName).Replace("{totalArticles}", totalArticles).Replace("{totalSources}", totalSource);
+            template = template
+                .Replace("{firstName}", firstName)
+                .Replace("{totalArticles}", totalArticles)
+                .Replace("{totalSources}", totalSource)
+                .Replace("{deactivateLink}", deactivateUrl);
             return template;
         }
     }
