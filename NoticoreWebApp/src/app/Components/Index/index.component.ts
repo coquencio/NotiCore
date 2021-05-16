@@ -16,6 +16,7 @@ export class IndexComponent implements OnInit {
   formSuccess : string = '';
   loading : boolean = false;
   finished : boolean = false;
+  isOpen: boolean = false;
   constructor(private fb: FormBuilder, private subscriberService: SubscriberServiceService) { }
 
   ngOnInit(): void {
@@ -45,7 +46,7 @@ export class IndexComponent implements OnInit {
           await this.sleep(2000);
           this.formSuccess = '';
         },
-        e => {this.formError = e.error.errors.join("\n");console.log(error);},
+        e => {this.formError = e.error.errors.join("\n");},
         () => this.loading = false
       );
     }
@@ -62,6 +63,10 @@ export class IndexComponent implements OnInit {
     }
     return true;
   }
-  title: string = "This is a test title";
-  text: string = "Hello from an index component";
+  showPrivacy(): void{
+    this.isOpen = true;
+  }
+  closeModal(close: boolean){
+    this.isOpen = close;
+  }
 }
