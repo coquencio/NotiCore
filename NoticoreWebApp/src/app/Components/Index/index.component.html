@@ -38,6 +38,9 @@
       Last Name:
       <input class="input" type="text" formControlName="lastName">
     </label>
+    <div  class="notification is-warning is-light">
+       <p>By submiting this form you accept our <a (click)="showPrivacy()">privacy policy</a>.</p>
+    </div>
     <div class="control">
       <button (click)="submitForm()" class="button is-primary">Submit</button>
     </div>
@@ -59,3 +62,5 @@
     <app-info-box Title = "Finally" IconClass="fa-envelope-o" Text="We build an email with the user's selected sources and send it."> </app-info-box>
   </div>
 </div>
+<app-privacy-modal [isOpen]="isOpen" (closeModalEmitter)="closeModal($event)"></app-privacy-modal>
+  

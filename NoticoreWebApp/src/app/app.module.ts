@@ -16,6 +16,7 @@ import { DonateComponent } from './Components/Donate/donate.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { WalletComponent } from './Components/Nested/Wallet/wallet.component';
 import { ClipboardModule } from 'ngx-clipboard';
+import { PrivacyModalComponent } from './Components/Nested/privacy-modal/privacy-modal.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ClipboardModule } from 'ngx-clipboard';
     LoadingComponent,
     SourcesComponent,
     DonateComponent,
-    WalletComponent
+    WalletComponent,
+    PrivacyModalComponent
   ],
   imports: [
     BrowserModule,

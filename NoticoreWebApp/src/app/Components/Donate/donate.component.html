@@ -14,6 +14,16 @@
 </div>
 <div *ngIf="!loading && errorMessage === ''" class="columns">
     <div class="column wallet-banner">
+        <div class="container wallet-container">
+            <h1>Paypal.me</h1>
+            <qrcode qrdata="https://www.paypal.com/paypalme/noticore" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>  
+                <br>
+                <a target="_blank" href="https://www.paypal.com/paypalme/noticore" class="button paypal-button">
+                    <i class="fa fa-paypal" aria-hidden="true" style="margin-right: 5px;"></i> Paypal me
+                </a>
+    </div>
+    </div>
+    <div class="column wallet-banner">
     <app-wallet coin="Bitcoin" [address] ="wallets.bitcoin"></app-wallet>
     </div>
     <div class="column wallet-banner">
