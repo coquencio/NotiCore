@@ -76,5 +76,17 @@ namespace NotiCore.API.Services.ControllerServices.Implementation
             var subscriber = _context.Subscribers.SingleOrDefault(s => s.Email.Equals(email) && s.IsActive);
             return (subscriber != null);
         }
+
+        public void Deactivate(string email)
+        {
+            var subscriber = _context.Subscribers.SingleOrDefault(s => s.Email.Equals(email));
+            if (subscriber != null)
+            {
+                subscriber.IsActive = false;
+                subscriber.HasAuthorized = false;
+                _context.Update(subscriber);
+                _context.SaveChanges();
+            }
+        }
     }
 }

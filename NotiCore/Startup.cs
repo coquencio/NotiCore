@@ -34,6 +34,7 @@ using NotiCore.API.Infraestructure.Extensions;
 using NotiCore.API.Infraestructure.Common;
 using NotiCore.API.Jobs.Notifications;
 using NotiCore.API.Jobs.Mailer.Commands;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 
 namespace NotiCore
 {
@@ -92,6 +93,7 @@ namespace NotiCore
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IUrlService, UrlService>();
             services.AddScoped<IViewModelService, ViewModelService>();
+            services.AddScoped<IWalletService, WalletService>();
 
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration
@@ -147,6 +149,7 @@ namespace NotiCore
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NotiCore v1"));
             }
+            propertiesService.SaveProperty("BaseAddress", Configuration["BaseAddress"]);
 
             propertiesService
                 .SaveRawProperty(PropertyConstants.MailHost, Configuration
@@ -163,7 +166,10 @@ namespace NotiCore
                 .GetSection("MailerValues")
                 .GetSection(PropertyConstants.MailPort).Value);
 
-            // Get from json file
+            propertiesService.SaveProperty("Bitcoin", Configuration.GetSection("WalletAddresses")["Bitcoin"]);
+            
+            propertiesService.SaveProperty("Ethereum", Configuration.GetSection("WalletAddresses")["Ethereum"]);
+
             loggerFactory.AddSerilog();
             app.UseHangfireDashboard();
             //backgroundJobs.Enqueue<MediatorWrapper> (c => c.Send("Daily news scrap job", new ScrapNewsCmd()));
@@ -173,9 +179,12 @@ namespace NotiCore
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(a => a.WithOrigins(Configuration["ClientAppRoute"])
+            .WithMethods("POST", "GET")
+            .AllowAnyHeader());
+            
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

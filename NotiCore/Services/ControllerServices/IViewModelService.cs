@@ -11,5 +11,6 @@ namespace NotiCore.API.Services.ControllerServices
     {
         SourceSetupViewModel GetUserSourceSetupModel(string values);
         void SaveUserChanges(IFormCollection values);
+        public void DeactivateSubscriber(string userName);
     }
 }

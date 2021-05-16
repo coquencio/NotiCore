@@ -28,7 +28,6 @@ namespace NotiCore.API.Controllers
         }
         [HttpPost]
         [Route("Enroll")]
-        [Authorize(Policy = "Admin")]
         public async Task<BaseResponse<string>> EnrollSubscriber(AddSubscriberRequest request)
         {
             try

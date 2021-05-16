@@ -1,0 +1,27 @@
+<div class="columns" style="background-color: #7C4B96;">
+    <div class="column">
+        <div class="container donation-legend">
+            <h1>Help us to continue</h1>
+            <br>
+            By donating you help me to continue building an API to share this service features.
+        </div>
+    </div>
+</div>
+<div *ngIf="errorMessage !== ''" class="columns">
+    <div class="notification is-danger is-light">
+        {{errorMessage}}
+      </div>
+</div>
+<div *ngIf="!loading && errorMessage === ''" class="columns">
+    <div class="column wallet-banner">
+    <app-wallet coin="Bitcoin" [address] ="wallets.bitcoin"></app-wallet>
+    </div>
+    <div class="column wallet-banner">
+    <app-wallet coin="Ethereum" [address] ="wallets.ethereum"></app-wallet>
+</div>
+</div>
+<div *ngIf="loading" class="colums">
+    <div class="column">
+        <app-loading></app-loading>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="main-header">
+    <div class="columns">
+        <div class="column half">
+            <img src="assets/img/purpleLogo.png">
+          <h1>Get all gathered sources.</h1>
+          <p>Noticore is a newsletter service which main goal is to try to collect all the possible sources into a single email.</p>
+        </div>
+        <div class="column half">
+          <img class="phone-container" src="assets/img/phone.jpg">
+        </div>
+      </div>
+</div>
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+<div *ngIf="!loading" class="columns">
+  <div class="column form-container">
+    <div *ngIf="formSuccess != ''"class="notification is-success is-light">
+      {{formSuccess}}
+    </div>
+    <div *ngIf="finished" class="notification is-warning is-light">
+      If you haven't received a confirmation email try<a (click)="submitForm()"><strong> resending it</strong></a>
+    </div>
+    <div *ngIf="formError != ''"  class="notification is-danger is-light">
+      {{formError}}
+    </div>
+  <h1 *ngIf="!finished">Subscribe to the newsletter</h1>
+  <form [hidden]="finished" [formGroup]="subscriberForm">
+    <label class="label">
+      Email*:
+      <input class="input" type="email" formControlName="email">
+    </label>
+    <label class="label">
+      First Name*:
+      <input class="input" type="text" formControlName="firstName">
+    </label>
+    <label class="label">
+      Last Name:
+      <input class="input" type="text" formControlName="lastName">
+    </label>
+    <div class="control">
+      <button (click)="submitForm()" class="button is-primary">Submit</button>
+    </div>
+  </form>     
+ </div>
+</div>
+<div class="columns">
+  <div class="column title">
+    <h1>How does it work?</h1></div>
+</div>
+<div class="columns info-section">
+  <div class="column">
+    <app-info-box Title = "First" IconClass="fa-cloud-download" Text="We try to scrapp articles from diferent sources through open APIs like RSS channels. "></app-info-box>
+  </div>
+  <div class="column">
+    <app-info-box Title = "Then" IconClass="fa-search" Text="We analyze and try to get a category foreach article."></app-info-box>
+  </div>
+  <div class="column ">
+    <app-info-box Title = "Finally" IconClass="fa-envelope-o" Text="We build an email with the user's selected sources and send it."> </app-info-box>
+  </div>
+</div>

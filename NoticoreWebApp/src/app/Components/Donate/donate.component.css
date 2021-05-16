@@ -1,0 +1,14 @@
+.donation-legend{
+    color: white;
+    padding: 20px;
+    font-size: 15px;
+}
+
+.donation-legend h1{
+    font-size: xx-large;
+}
+
+.wallet-banner{
+  max-width:500px; 
+  margin:auto;
+}

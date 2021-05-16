@@ -61,6 +61,7 @@ namespace NotiCore.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public BaseResponse<IEnumerable<Source>> GetSources([FromQuery] string query, [FromQuery] int languageId = 0)
         {
             try

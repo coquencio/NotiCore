@@ -16,12 +16,13 @@ namespace NotiCore.API.Jobs.Mailer.Commands
     {
         private readonly DataContext _context;
         private readonly IEmailService _emailService;
-        public ScrappedArticlesNotificationHanlder(DataContext context, IEmailService emailService)
+        private string _baseAddress;
+        public ScrappedArticlesNotificationHanlder(DataContext context, IEmailService emailService, IPropertiesService propertiesService)
         {
             _emailService = emailService;
             _context = context;
+            _baseAddress = propertiesService.GetProperty("BaseAddress");
         }
-
 
         public Task Handle(ScrappedArticlesNotification notification, CancellationToken cancellationToken)
         {
@@ -47,7 +48,7 @@ namespace NotiCore.API.Jobs.Mailer.Commands
                 }
                 if (cleanSubscriberArticles.Any())
                 {
-                    BackgroundJob.Enqueue(() => _emailService.SendNewsLetterEmail(subscriber.Email, subscriber.Name, cleanSubscriberArticles.ToArray()));
+                    BackgroundJob.Enqueue(() => _emailService.SendNewsLetterEmail(subscriber.Email, subscriber.Name, cleanSubscriberArticles.ToArray(), _baseAddress));
                 }
             }
             foreach (var article in pendingArticles)

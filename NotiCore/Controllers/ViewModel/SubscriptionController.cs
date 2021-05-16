@@ -39,5 +39,20 @@ namespace NotiCore.API.Controllers.API
                 return View(true);
             }
         }
+        [HttpGet]
+        [Route("Deactivate")]
+        [AllowAnonymous]
+        public IActionResult DeactivateSubscriber([FromQuery] string values = null)
+        {
+            try
+            {
+                _viewModelService.DeactivateSubscriber(values);
+                return View(true);
+            }
+            catch (Exception)
+            {
+                return View(false);
+            }
+        }
     }
 }
