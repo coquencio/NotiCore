@@ -1,0 +1,12 @@
+<footer class="footer">
+    <div class="content has-text-centered">
+        <img src="assets/img/blackLogo.png">
+      
+        <p><a style="color: white;"(click)="showPrivacy()">Privacy policy</a></p>
+        <p><a style="color: white;" href="mailto:contact@noticore.com">Email Us</a></p>
+        <p>
+        Noticore 2021
+      </p>
+    </div>
+    <app-privacy-modal [isOpen]="isOpen" (closeModalEmitter)="closeModal($event)"></app-privacy-modal>
+  </footer>

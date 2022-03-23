@@ -1,0 +1,27 @@
+<div class="columns">
+    <div class="column" style="margin:auto; max-width: 500px; padding: 25px;">
+        <input [(ngModel)] = "query" (ngModelChange)="getSources()" class="input" type="text" placeholder="Search Source">
+    </div>
+</div>
+<div class="columns">
+    <div class="column" style="max-width:500px; margin:auto;">
+        <div class="source-table container">
+            <div *ngIf="loading">
+                <app-loading></app-loading>
+            </div>
+            <table *ngIf="!loading" class="table">
+                <body>
+                    <tr>
+                        <th>Source name</th>
+                        <th>Language</th>
+                    </tr>
+                    <tr *ngFor="let source of sources">
+                        <td><a href="{{source.url}}" target="_blank">{{source.name}}</a></td>
+                        <td>{{source.language.abbreviation}}</td>
+                    </tr>
+            
+                </body>
+            </table>        
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+.donation-legend{
+    color: white;
+    padding: 20px;
+    font-size: 15px;
+}
+
+.donation-legend h1{
+    font-size: xx-large;
+}
+
+.wallet-banner{
+  max-width:500px; 
+  margin:auto;
+}
+.wallet-container {
+  text-align: center;
+  padding: 15px;
+  margin: 15px;
+  border-radius: 16px;
+  border: 1px solid #7C4B96 !important;
+}
+.wallet-container h1 {
+  text-align: left;
+  font-weight: bold;
+  font-size: 17px;
+}
+.paypal-button{
+  background-color: orange;
+  width: 100%;
+  max-width: 300px;
+  color: #363636;
+  margin-top: -30px;
+  margin-bottom: 60px;
+}
+.paypal-button:hover{
+  color: white;
+}

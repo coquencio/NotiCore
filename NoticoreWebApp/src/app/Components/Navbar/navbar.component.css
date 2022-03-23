@@ -1,0 +1,28 @@
+.navbar{
+    background-color: black;
+    color:#7c4b96;
+    min-height: 80px;
+}
+.navbar a{
+    color: white;
+}
+.navbar a:hover {
+    font-weight: bold;
+  }
+.navbar-item img{
+    max-height: 80px;
+    width: auto;
+}
+.active-route{
+    font-weight: bold;
+}
+
+.is-active{
+    background-color: black;
+}
+div.is-active{
+    margin-right: 20px;
+}
+.navbar-burger{
+    margin-right: 10px;
+}

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotiCoreML.Model", "NotiCor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotiCoreML.ConsoleApp", "NotiCoreML.ConsoleApp\NotiCoreML.ConsoleApp.csproj", "{56C003E4-1031-46EE-A2B7-E117A53F55A8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotiCoreTopicML.Model", "NotiCoreTopicML.Model\NotiCoreTopicML.Model.csproj", "{CC257394-A158-49C6-AD29-8038D960C1C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{56C003E4-1031-46EE-A2B7-E117A53F55A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56C003E4-1031-46EE-A2B7-E117A53F55A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56C003E4-1031-46EE-A2B7-E117A53F55A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC257394-A158-49C6-AD29-8038D960C1C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC257394-A158-49C6-AD29-8038D960C1C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC257394-A158-49C6-AD29-8038D960C1C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC257394-A158-49C6-AD29-8038D960C1C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

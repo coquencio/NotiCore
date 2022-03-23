@@ -2,17 +2,41 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>8f8d557e-66c2-4c87-a8f3-1fad3f09be2d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.30" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <Compile Remove="Infraestructure\Exceptions\**" />
+    <Content Remove="Infraestructure\Exceptions\**" />
+    <EmbeddedResource Remove="Infraestructure\Exceptions\**" />
+    <None Remove="Infraestructure\Exceptions\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infraestructure\Exceptions\" />
-    <Folder Include="Infraestructure\Responses\" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="9.5.0" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.19" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.19" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.19" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.30" />
+    <PackageReference Include="MailKit" Version="2.11.1" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.ML" Version="1.5.0-preview2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="MimeKit" Version="2.11.0" />
+    <PackageReference Include="Python.Included" Version="3.7.3.13" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
+    <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.6.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
 </Project>

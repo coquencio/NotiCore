@@ -1,0 +1,16 @@
+.source-form {
+    padding: 15px;
+    margin: 15px;
+    border-radius: 16px;
+    border: 1px solid #7C4B96 !important;
+}
+.source-form h1 {
+    font-weight: bold;
+    font-size: 17px;
+}
+.source-form h2 {
+    font-weight: bold;
+    color: #7c4b96;
+    margin: 20px;
+    font-size: 15px;
+}

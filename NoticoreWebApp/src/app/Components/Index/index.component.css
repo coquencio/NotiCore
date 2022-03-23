@@ -1,0 +1,63 @@
+.main-header{
+    height: auto;
+    width: 100%;
+    display: block;
+    padding: 20px;
+    background-color: #7c4b96;
+    color: white;
+}
+.half{
+    margin: auto;
+    max-width: 400px;
+}
+.half h1{
+    font-size: xx-large;
+    font-weight: bold;
+}
+.form-container{
+    padding: 30px;
+    margin: auto;
+    margin-top: 15px;
+    max-width: 600px;
+}
+.form-container label{
+    color: #7c4b96;
+}
+.form-container input{
+    border-color: #7C4B96;
+}
+.form-container h1{
+    color: black;
+    font-size: xx-large;
+    font-weight: bold;
+}
+.title{
+    background-color: #7c4b96;
+    padding: 40px;
+    text-align: center;
+}
+.title h1{
+    color: white;
+    font-size: xx-large;
+    font-weight: bold;
+}
+.is-primary{
+    background-color: #7c4b96 !important;
+}
+.notification{
+    text-align: center;
+}
+
+.info-section{
+    padding: 40px;
+}
+.phone-container{
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    display: block;
+    border: 8px;
+    border-style: solid;
+    border-color: #131313;
+ }
